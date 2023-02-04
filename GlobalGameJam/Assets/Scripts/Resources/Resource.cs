@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    private string type;
-    private byte id;
-    private float yield;
+    public string type;
+    public int id;
+    public float yield;
 
-    public Resource(string _type, byte _id, float _yield)
+    public Resource(string _type, int _id, float _yield)
     {
         type = _type;
         id = _id;
@@ -18,12 +18,25 @@ public class Resource : MonoBehaviour
     {
         return type;
     }
-    public byte getId()
+    public int getId()
     {
         return id;
     }
     public float getYield()
     {
         return yield;
+    }
+
+    public void setType(string _type)
+    {
+        type = _type;
+    }
+    public void setId(int _id)
+    {
+        id = _id;
+    }
+    public void setYield(float _yield)
+    {
+        yield = _yield;
     }
 }
