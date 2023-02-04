@@ -9,6 +9,7 @@ public class Mole : Enemy
     { }
 
     private SpriteRenderer spriteRenderer;
+    public Animator animator;
 
     private Vector2 min;
     private Vector2 max;
@@ -28,9 +29,11 @@ public class Mole : Enemy
         if (!attacking)
         {
             Move();
+            animator.SetBool("Gnaw", false);
         }
         else if (attacking)
         {
+            animator.SetBool("Gnaw", true);
             timer += Time.deltaTime;
             if (timer >= timeBetweenAttacks)
             {

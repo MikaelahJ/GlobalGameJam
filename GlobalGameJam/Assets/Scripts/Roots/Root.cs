@@ -9,6 +9,8 @@ public class Root : MonoBehaviour
     public Node parent;
     public Node child;
 
+    public bool isBroken = false;
+
     public List<GameObject> subroots;
     public Dictionary<int, List<Sprite>> allRootSprites = new Dictionary<int, List<Sprite>>();
     public List<Sprite> lvl1RootSprites;
