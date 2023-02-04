@@ -10,6 +10,11 @@ public class ButtonPressOnNode : MonoBehaviour, IPointerDownHandler, IPointerUpH
     bool isInside = true;
     bool isPressed = false;
     // Start is called before the first frame update
+    void Start()
+    {
+        GetComponent<Canvas>().worldCamera = Camera.main;
+    }
+
     void Update()
     {
         if (isPressed && !isInside)
