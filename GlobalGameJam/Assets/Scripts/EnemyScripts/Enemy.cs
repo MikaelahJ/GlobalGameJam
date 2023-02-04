@@ -10,6 +10,11 @@ public class Enemy : MonoBehaviour
     public float timeBetweenAttacks;
     public Sprite sprite;
 
+    public GameObject targetRoot;
+
+    public bool foundRoot;
+    public bool attacking;
+
     public Enemy(int _health, int _damage, float _speed, float _timeBetweenAttacks)
     {
         health = _health;
@@ -18,8 +23,38 @@ public class Enemy : MonoBehaviour
         timeBetweenAttacks = _timeBetweenAttacks;
     }
 
-    public void Test()
+    public void Attack()
     {
-        Debug.Log("hej " + health + " " + damage + " " + speed);
+        Debug.Log("attack");
+
+        if (targetRoot.GetComponent<RootHealth>().rootDestroyed)
+            RootDestroyed();
+        else
+            targetRoot.GetComponent<RootHealth>().LoseHealth(damage);
+    }
+
+    private void RootDestroyed()
+    {
+        attacking = false;
+        foundRoot = false;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Root") && !foundRoot)
+        {
+            foundRoot = true;
+            targetRoot = collision.gameObject;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Root"))
+        {
+
+            attacking = true;
+            targetRoot = collision.gameObject;
+        }
     }
 }

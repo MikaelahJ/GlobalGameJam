@@ -13,11 +13,6 @@ public class Mole : Enemy
     private Vector2 min;
     private Vector2 max;
 
-    private GameObject targetRoot;
-
-    private bool foundRoot;
-    private bool attacking;
-
     private float timer;
 
     void Start()
@@ -28,7 +23,7 @@ public class Mole : Enemy
         max = new Vector2(transform.position.x + 5, transform.position.y);
     }
 
-    void Update()
+    private void Update()
     {
         if (!attacking)
         {
@@ -57,31 +52,6 @@ public class Mole : Enemy
             float time = Mathf.PingPong(Time.time * speed / 10, 1);
             transform.position = Vector3.Lerp(min, max, time);
         }
-    }
-
-    private void Attack()
-    {
-        Debug.Log("attack");
-        //SendDamage to root
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Root") && !foundRoot)
-        {
-            foundRoot = true;
-            targetRoot = collision.gameObject;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Root"))
-        {
-
-            attacking = true;
-            targetRoot = collision.gameObject;
-        }
-
     }
 
 }

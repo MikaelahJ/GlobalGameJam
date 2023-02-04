@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  damage: 4
+  damage: 2
   speed: 2
   timeBetweenAttacks: 1
   sprite: {fileID: 0}
