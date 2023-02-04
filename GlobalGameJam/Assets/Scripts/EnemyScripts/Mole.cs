@@ -42,6 +42,11 @@ public class Mole : Enemy
 
     private void Move()
     {
+        if (transform.rotation.z < 180 && transform.rotation.z > 0)
+            GetComponentInChildren<SpriteRenderer>().flipY = true;
+        else
+            GetComponentInChildren<SpriteRenderer>().flipY = false;
+
         if (foundRoot)
         {
             transform.position = Vector3.Lerp(transform.position, targetRoot.transform.position, speed / 10 * Time.deltaTime);
