@@ -59,6 +59,7 @@ public class Node : MonoBehaviour
             {
                 AudioManager.Instance.EffectsSource.PlayOneShot(snapAttack);
                 enemyInRange.GetComponent<Mole>().LoseHealth(damage);
+                enemyInRange.GetComponent<Mole>().animator.SetTrigger("Hit");
                 timer = 0f;
             }
         }
