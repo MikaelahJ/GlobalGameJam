@@ -24,6 +24,7 @@ public class RootHealth : MonoBehaviour
     {
         AudioManager.Instance.EffectsSource.PlayOneShot(rootBreak);
         rootDestroyed = true;
+        GetComponentInParent<Root>().isBroken = true;
         GetComponent<Collider2D>().enabled = false;
     }
 }

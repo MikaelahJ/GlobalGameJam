@@ -27,6 +27,10 @@ public class Node : MonoBehaviour
     public GameObject canvasUI;
     public List<Abilities> abilities = new List<Abilities>();
 
+    public GameObject vision;
+
+    public List<ResourcePoint> closeResources = new List<ResourcePoint>();
+
     private bool isDefence;
     private bool isAttacking;
     private int damage;
@@ -83,13 +87,39 @@ public class Node : MonoBehaviour
         {
             if (abilities[i] == Abilities.Empty)
             {
-                Debug.Log("Added new ability: " + newAbility);
-                abilities[i] = newAbility;
-                if (newAbility == Abilities.Defence)
+                switch (newAbility)
                 {
-                    SetAsDefenceNode();
+                    case Abilities.Vision:
+                    {
+                            abilities[i] = newAbility;
+                            AddVision();
+                            break;
+                    }
+                    case Abilities.Resources:
+                    {
+                            if (TryAddResources(this))
+                            {
+                                Debug.Log("Added resource ability");
+                                foreach (ResourcePoint resourcePoint in closeResources)
+                                {
+                                    TryConnectResourcePoint(resourcePoint);
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log("Could not add resource ability");
+                                return;
+                            }
+                            break;
+                    }
+                    case Abilities.Defence:
+                    {
+                            abilities[i] = newAbility;
+                            SetAsDefenceNode();
+                            break;
+                    }
                 }
-
+                Debug.Log("Added new ability: " + newAbility);
                 return;
             }
         }
@@ -136,6 +166,11 @@ public class Node : MonoBehaviour
         Destroy(gameObject);
     }
 
+    void AddVision()
+    {
+        vision.SetActive(true);
+    }
+
     private void SetAsDefenceNode()
     {
         isDefence = true;
@@ -147,14 +182,45 @@ public class Node : MonoBehaviour
         hitCollider.GetComponent<CircleCollider2D>().radius = 3;
     }
 
+    private bool TryAddResources(Node current)
+    {
+        if (current.parent.abilities.Contains(Abilities.Resources))
+        {
+            AddResourceAbility(current);
+            return true;
+        }
+        else if (current.parent.abilities.Contains(Abilities.Empty))
+        {
+            if (TryAddResources(current.parent))
+            {
+                AddResourceAbility(current);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void AddResourceAbility(Node current)
+    {
+        for (int i = 0; i < current.abilities.Count; i++)
+        {
+            if (current.abilities[i] == Abilities.Empty)
+            {
+                current.abilities[i] = Abilities.Resources;
+                return;
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Collided with trigger");
         if(other.gameObject.TryGetComponent(out ResourcePoint resourcePoint))
         {
             Debug.Log("found resource");
-            //if connectedtoleek
-            ResourceManager.Instance.addResources(resourcePoint.pumpOut());
+            closeResources.Add(resourcePoint);
+            TryConnectResourcePoint(resourcePoint);
+            
         }
 
         if (isDefence && other.gameObject.CompareTag("Enemy") && other is CapsuleCollider2D && enemyInRange == null)
@@ -163,6 +229,33 @@ public class Node : MonoBehaviour
             enemyInRange = other.gameObject;
         }
     }
+
+    void TryConnectResourcePoint(ResourcePoint resourcePoint)
+    {
+        if (CheckIfConnectedToLeek(this))
+            ResourceManager.Instance.addResources(resourcePoint.pumpOut());
+    }
+
+    bool CheckIfConnectedToLeek(Node current)
+    {
+        if(current.parent == null)
+        {
+            Debug.Log("Resource is connected to leek");
+            return true;
+        }
+        if (current.RootToParent.GetComponent<Root>().isBroken)
+        {
+            Debug.Log("Above root is broken at " + current.transform.position);
+            return false;
+        }
+        if (!current.abilities.Contains(Abilities.Resources))
+        {
+            Debug.Log("Node can't transport resources at " + current.transform.position);
+            return false;
+        }
+        return CheckIfConnectedToLeek(current.parent);
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         isAttacking = false;

@@ -32,6 +32,9 @@ public class RootManager : MonoBehaviour
             GameObject leek = Instantiate(rootNode);
             leek.name = "leek0";
             selectedNode = leek.GetComponent<Node>();
+            selectedNode.level = 3;
+            selectedNode.abilities.Add(Abilities.Resources);
+
         }
     }
 
