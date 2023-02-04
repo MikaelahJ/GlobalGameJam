@@ -143,10 +143,12 @@ public class Node : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //exempel kod f�r resource detection
-        //if(other.gameObject.TryGetComponent(out Resource resource))
+        Debug.Log("Collided with trigger");
+        if(other.gameObject.TryGetComponent(out ResourcePoint resourcePoint))
         {
-
+            Debug.Log("found resource");
+            //if connectedtoleek
+            ResourceManager.Instance.addResources(resourcePoint.pumpOut());
         }
 
         if (isDefence && other.gameObject.CompareTag("Enemy") && other is CapsuleCollider2D && enemyInRange == null)
