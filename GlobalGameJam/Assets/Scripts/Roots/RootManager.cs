@@ -58,6 +58,7 @@ public class RootManager : MonoBehaviour
     }
     public void SpawnRoot(Node startNode, Vector2 endPosition)
     {
+        ClearPreview();
         Vector2 fromStartToEnd = endPosition - (Vector2)startNode.transform.position;
 
         Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
@@ -70,13 +71,13 @@ public class RootManager : MonoBehaviour
         }
 
         Node newNode = startNode.SpawnRootNode(rootNode, oneSubrootDistance * length, transform);
-        if (newNode != null)
+        if (newNode == null)
         {
             //selectedNode = newNode;
-
-            rootNodes.Add(newNode);
+            Debug.Log("No more roots allowed!");
+            return;
         }
-
+        rootNodes.Add(newNode);
 
         GameObject newRoot = Instantiate(root, selectedNode.transform.position, Quaternion.identity, transform);
         newNode.RootToParent = newRoot;
@@ -89,7 +90,7 @@ public class RootManager : MonoBehaviour
         roots.Add(newRoot);
         newRoot.name = "Root" + roots.Count;
 
-        ClearPreview();
+       
     }
 
     public void DrawPreview()

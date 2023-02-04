@@ -100,8 +100,11 @@ public class Node : MonoBehaviour
             Debug.Log("Parent node too low level!");
             return;
         }
+
+
         Debug.Log("Upgraded node");
         level++;
+        RootToParent.GetComponent<Root>().LevelUpRoots(level);
         abilities.Add(Abilities.Empty);
     }
 
@@ -110,7 +113,7 @@ public class Node : MonoBehaviour
         if (children.Count < maxAmountOfChildren)
         {
             GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
-            newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
+            newRootNode.name = "Node";
 
             Node newNode = newRootNode.GetComponent<Node>();
             newNode.parent = this;
