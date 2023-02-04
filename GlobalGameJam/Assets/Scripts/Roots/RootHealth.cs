@@ -21,5 +21,6 @@ public class RootHealth : MonoBehaviour
     private void RootDestroyed()
     {
         rootDestroyed = true;
+        GetComponent<Collider2D>().enabled = false;
     }
 }

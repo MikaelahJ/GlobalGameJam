@@ -49,8 +49,10 @@ public class Mole : Enemy
         }
         else
         {
-            float time = Mathf.PingPong(Time.time * speed / 10, 1);
-            transform.position = Vector3.Lerp(min, max, time);
+            transform.position += transform.up * speed * Time.deltaTime;
+
+            //float time = Mathf.PingPong(Time.time * speed / 10, 1);
+            //transform.position = Vector3.Lerp(min, max, time);
         }
     }
 

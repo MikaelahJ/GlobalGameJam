@@ -56,5 +56,9 @@ public class Enemy : MonoBehaviour
             attacking = true;
             targetRoot = collision.gameObject;
         }
+        else if (collision.gameObject.CompareTag("BoundsBox"))
+        {
+            EnemyManager.Instance.RemoveEnemy(this.gameObject);
+        }
     }
 }
