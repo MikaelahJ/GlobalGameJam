@@ -1780,54 +1780,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 365808586}
-    - target: {fileID: 970619675, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 970619675, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 970619675, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 970619675, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154032576, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154032576, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154032576, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154032576, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1323217024, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1323217024, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1323217024, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1323217024, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1911714684597312573, guid: 2a0658fe17fc1504a8f1fe126e781e0c, type: 3}
       propertyPath: m_Name
       value: RootNode

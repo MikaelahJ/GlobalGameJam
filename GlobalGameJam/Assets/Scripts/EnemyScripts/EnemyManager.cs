@@ -59,6 +59,7 @@ public class EnemyManager : MonoBehaviour
     public void EnemyKilled(GameObject enemy)
     {
         activeEnemies.Remove(enemy);
+        enemy.SetActive(false);
 
         //TODO skapa näringsresurs
     }

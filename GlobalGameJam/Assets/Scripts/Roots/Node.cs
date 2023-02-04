@@ -17,10 +17,18 @@ public class Node : MonoBehaviour
     public GameObject RootToParent;
 
     public List<Node> children;
+    public int maxAmountOfChildren = 3;
 
     public int level = 1;
     public GameObject canvasUI;
     public List<Abilities> abilities = new List<Abilities>();
+
+    private bool isDefence;
+    private bool isAttacking;
+    private int damage;
+    private float timer;
+    private float timeBetweenAttacks;
+    private GameObject enemyInRange;
 
     public Node(Node parent)
     {
@@ -30,16 +38,27 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeBetweenAttacks = 1;
+        damage = 2;
         for (int i = 0; i < level; i++)
         {
             abilities.Add(Abilities.Empty);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        if (isDefence)
+        {
+            timer += Time.deltaTime;
+            if (isAttacking && timer >= timeBetweenAttacks)
+            {
+                Debug.Log(timeBetweenAttacks);
+                Debug.Log(timer);
+                enemyInRange.GetComponent<Mole>().LoseHealth(damage);
+                timer = 0f;
+            }
+        }
     }
 
     public void DisplayUI()
@@ -63,15 +82,20 @@ public class Node : MonoBehaviour
             {
                 Debug.Log("Added new ability: " + newAbility);
                 abilities[i] = newAbility;
+                if (newAbility == Abilities.Defence)
+                {
+                    SetAsDefenceNode();
+                }
+
                 return;
             }
         }
-        Debug.Log("Couldn't add "+ newAbility + ", no slots empty");
+        Debug.Log("Couldn't add " + newAbility + ", no slots empty");
     }
 
     public void UpgradeNode()
     {
-        if(parent.level <= level)
+        if (parent.level <= level)
         {
             Debug.Log("Parent node too low level!");
             return;
@@ -83,14 +107,18 @@ public class Node : MonoBehaviour
 
     public Node SpawnRootNode(GameObject rootNode, Vector2 position, Transform parent)
     {
-        GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
-        newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
+        if (children.Count < maxAmountOfChildren)
+        {
+            GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
+            newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
 
-        Node newNode = newRootNode.GetComponent<Node>();
-        newNode.parent = this;
-        children.Add(newNode);
+            Node newNode = newRootNode.GetComponent<Node>();
+            newNode.parent = this;
+            children.Add(newNode);
 
-        return newNode;
+            return newNode;
+        }
+        return null;
     }
 
     public void DestroyNode()
@@ -102,6 +130,16 @@ public class Node : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void SetAsDefenceNode()
+    {
+        isDefence = true;
+        maxAmountOfChildren = 0;
+
+        var hitCollider = Instantiate(new GameObject(), transform);
+        hitCollider.AddComponent<CircleCollider2D>();
+        hitCollider.GetComponent<CircleCollider2D>().isTrigger = true;
+        hitCollider.GetComponent<CircleCollider2D>().radius = 3;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -110,5 +148,16 @@ public class Node : MonoBehaviour
         {
 
         }
+
+        if (isDefence && other.gameObject.CompareTag("Enemy") && other is CapsuleCollider2D && enemyInRange == null)
+        {
+            isAttacking = true;
+            enemyInRange = other.gameObject;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isAttacking = false;
+        enemyInRange = null;
     }
 }

@@ -25,8 +25,6 @@ public class Enemy : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("attack");
-
         if (targetRoot.GetComponent<RootHealth>().rootDestroyed)
             RootDestroyed();
         else
@@ -44,6 +42,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            Debug.Log("dead");
             EnemyManager.Instance.EnemyKilled(this.gameObject);
         }
     }

@@ -21,7 +21,7 @@ public class RootManager : MonoBehaviour
     {
         Instance = this;
 
-        if(selectedNode == null)
+        if (selectedNode == null)
         {
             GameObject leek = Instantiate(rootNode);
             leek.name = "leek0";
@@ -52,16 +52,20 @@ public class RootManager : MonoBehaviour
         Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
         int length = Mathf.FloorToInt(fromStartToEnd.magnitude / oneSubrootDistance.magnitude);
         Debug.Log(length);
-        if(length == 1)
+        if (length == 1)
         {
             Debug.Log("Couldn't spawn root! Too close to selected node!");
             return;
         }
 
-        Node newNode = startNode.SpawnRootNode(rootNode,oneSubrootDistance * length, transform);
-        selectedNode = newNode;
+        Node newNode = startNode.SpawnRootNode(rootNode, oneSubrootDistance * length, transform);
+        if (newNode != null)
+        {
+            selectedNode = newNode;
 
-        rootNodes.Add(newNode);
+            rootNodes.Add(newNode);
+        }
+
 
         GameObject newRoot = Instantiate(root, selectedNode.transform.position, Quaternion.identity, transform);
         newNode.RootToParent = newRoot;
