@@ -60,6 +60,6 @@ public class EnemyManager : MonoBehaviour
     {
         activeEnemies.Remove(enemy);
 
-        //Göra näringsresurs
+        //TODO skapa näringsresurs
     }
 }
