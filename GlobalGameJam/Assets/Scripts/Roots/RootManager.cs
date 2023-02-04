@@ -16,12 +16,16 @@ public class RootManager : MonoBehaviour
 
     public Node selectedNode;
 
+    private LineRenderer lineRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
 
-        if(selectedNode == null)
+        lineRenderer = GetComponent<LineRenderer>();
+
+        if (selectedNode == null)
         {
             GameObject leek = Instantiate(rootNode);
             leek.name = "leek0";
@@ -35,7 +39,7 @@ public class RootManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            SpawnRoot(selectedNode, cursorPos);
+            //SpawnRoot(selectedNode, cursorPos);
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -45,7 +49,12 @@ public class RootManager : MonoBehaviour
         }
     }
 
-    void SpawnRoot(Node startNode, Vector2 endPosition)
+    public void SpawnRoot()
+    {
+        Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        SpawnRoot(selectedNode, cursorPos);
+    }
+    public void SpawnRoot(Node startNode, Vector2 endPosition)
     {
         Vector2 fromStartToEnd = endPosition - (Vector2)startNode.transform.position;
 
@@ -59,7 +68,7 @@ public class RootManager : MonoBehaviour
         }
 
         Node newNode = startNode.SpawnRootNode(rootNode,oneSubrootDistance * length, transform);
-        selectedNode = newNode;
+        //selectedNode = newNode;
 
         rootNodes.Add(newNode);
 
@@ -74,5 +83,25 @@ public class RootManager : MonoBehaviour
         roots.Add(newRoot);
         newRoot.name = "Root" + roots.Count;
 
+        ClearPreview();
+    }
+
+    public void DrawPreview()
+    {
+        Debug.Log("drawing Preview");
+        lineRenderer.enabled = true;
+        Vector2 endPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        lineRenderer.SetPosition(0, selectedNode.transform.position);
+        Vector2 fromStartToEnd = endPosition - (Vector2)selectedNode.transform.position;
+
+        Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
+        int length = Mathf.FloorToInt(fromStartToEnd.magnitude / oneSubrootDistance.magnitude);
+
+        lineRenderer.SetPosition(1, selectedNode.transform.position + (Vector3)(oneSubrootDistance * length));
+    }
+
+    public void ClearPreview()
+    {
+        lineRenderer.enabled = false;
     }
 }

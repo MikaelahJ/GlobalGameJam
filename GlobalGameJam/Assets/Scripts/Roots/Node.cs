@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public enum Abilities
@@ -30,6 +32,7 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         for (int i = 0; i < level; i++)
         {
             abilities.Add(Abilities.Empty);
@@ -84,7 +87,7 @@ public class Node : MonoBehaviour
     public Node SpawnRootNode(GameObject rootNode, Vector2 position, Transform parent)
     {
         GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
-        newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
+        newRootNode.name = "Node";
 
         Node newNode = newRootNode.GetComponent<Node>();
         newNode.parent = this;
