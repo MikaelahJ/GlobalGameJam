@@ -42,10 +42,10 @@ public class Mole : Enemy
 
     private void Move()
     {
-        if (transform.rotation.z < 180 && transform.rotation.z > 0)
-            GetComponentInChildren<SpriteRenderer>().flipY = true;
+        if (transform.rotation.z % 360 < 180 && transform.rotation.z % 360 > 0)
+           transform.GetChild(0).GetComponent<SpriteRenderer>().flipY = true;
         else
-            GetComponentInChildren<SpriteRenderer>().flipY = false;
+            transform.GetChild(0).GetComponentInChildren<SpriteRenderer>().flipY = false;
 
         if (foundRoot)
         {
