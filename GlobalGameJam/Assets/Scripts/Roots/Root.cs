@@ -19,8 +19,8 @@ public class Root : MonoBehaviour
 
         for (int i = 0; i < length; i++)
         {
-            GameObject newSubRoot = Instantiate(subroot, (Vector2)start.transform.position + (oneSubrootDistance * i), Quaternion.identity, transform);
-            while (randomRoot == previousRoot)
+            GameObject newSubRoot = Instantiate(subroot, (Vector2)start.transform.position + oneSubrootDistance/2 + (oneSubrootDistance * i), Quaternion.identity, transform);
+            while (randomRoot == previousRoot && rootSprites.Count > 1)
                 randomRoot = Random.Range(0, rootSprites.Count);
 
             subroot.GetComponent<SpriteRenderer>().sprite = rootSprites[randomRoot];
