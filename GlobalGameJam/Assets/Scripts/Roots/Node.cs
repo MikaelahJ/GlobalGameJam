@@ -15,6 +15,8 @@ public enum Abilities
 
 public class Node : MonoBehaviour
 {
+    public AudioClip snapAttack;
+
     public Node parent;
     public GameObject RootToParent;
 
@@ -55,6 +57,7 @@ public class Node : MonoBehaviour
             timer += Time.deltaTime;
             if (isAttacking && timer >= timeBetweenAttacks)
             {
+                AudioManager.Instance.EffectsSource.PlayOneShot(snapAttack);
                 enemyInRange.GetComponent<Mole>().LoseHealth(damage);
                 timer = 0f;
             }
@@ -100,8 +103,11 @@ public class Node : MonoBehaviour
             Debug.Log("Parent node too low level!");
             return;
         }
+
+
         Debug.Log("Upgraded node");
         level++;
+        RootToParent.GetComponent<Root>().LevelUpRoots(level);
         abilities.Add(Abilities.Empty);
     }
 
@@ -110,7 +116,7 @@ public class Node : MonoBehaviour
         if (children.Count < maxAmountOfChildren)
         {
             GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
-            newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
+            newRootNode.name = "Node";
 
             Node newNode = newRootNode.GetComponent<Node>();
             newNode.parent = this;
