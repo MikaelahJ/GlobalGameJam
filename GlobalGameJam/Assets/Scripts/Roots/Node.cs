@@ -48,4 +48,14 @@ public class Node : MonoBehaviour
         Destroy(RootToParent);
         Destroy(gameObject);
     }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //exempel kod för resource detection
+        //if(other.gameObject.TryGetComponent(out Resource resource))
+        {
+
+        }
+    }
 }
