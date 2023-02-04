@@ -598,28 +598,24 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1001 &1607231949
+--- !u!1001 &1559022801
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 109785192736895755, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
-      propertyPath: gnawingSound
-      value: 
-      objectReference: {fileID: 8300000, guid: accbeac18115a7b408e31ba5a2f48872, type: 3}
     - target: {fileID: 109785192736895756, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 109785192736895756, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.2305183
+      value: 3.19
       objectReference: {fileID: 0}
     - target: {fileID: 109785192736895756, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.48
+      value: -0.31
       objectReference: {fileID: 0}
     - target: {fileID: 109785192736895756, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -733,6 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f6f7859296e254482a3ce32ab626b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieSound: {fileID: 8300000, guid: 90706826996e61d49ae49facb2079be6, type: 3}
   molePrefab: {fileID: 109785192736895792, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
   spawnPoints:
   - {fileID: 758588215}

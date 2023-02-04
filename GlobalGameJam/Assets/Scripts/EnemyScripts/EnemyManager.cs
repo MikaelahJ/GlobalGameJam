@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
     #endregion
+    public AudioClip dieSound;
 
     [SerializeField] private GameObject molePrefab;
 
@@ -56,8 +57,10 @@ public class EnemyManager : MonoBehaviour
         Destroy(enemy);
         activeEnemies.Remove(enemy);
     }
+
     public void EnemyKilled(GameObject enemy)
     {
+        AudioManager.Instance.EffectsSource.PlayOneShot(dieSound);
         activeEnemies.Remove(enemy);
         enemy.SetActive(false);
 
