@@ -23,7 +23,7 @@ public class Root : MonoBehaviour
 
     public void SpawnSubRoots(GameObject subroot, Node start, Vector2 oneSubrootDistance, int length)
     {
-        for (int i = 0; i < length; i++)
+        for (int i = 1; i < length; i++)
         {
             GameObject newSubRoot = Instantiate(subroot,(Vector2)start.transform.position + (oneSubrootDistance * i), Quaternion.identity, transform);
             newSubRoot.name = "Subroot" + i;

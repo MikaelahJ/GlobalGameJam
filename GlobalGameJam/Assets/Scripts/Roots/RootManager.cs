@@ -51,6 +51,12 @@ public class RootManager : MonoBehaviour
 
         Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
         int length = Mathf.FloorToInt(fromStartToEnd.magnitude / oneSubrootDistance.magnitude);
+        Debug.Log(length);
+        if(length == 1)
+        {
+            Debug.Log("Couldn't spawn root! Too close to selected node!");
+            return;
+        }
 
         Node newNode = startNode.SpawnRootNode(rootNode,oneSubrootDistance * length, transform);
         selectedNode = newNode;
