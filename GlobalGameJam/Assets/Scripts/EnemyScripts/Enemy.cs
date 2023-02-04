@@ -39,6 +39,15 @@ public class Enemy : MonoBehaviour
         foundRoot = false;
     }
 
+    public void LoseHealth(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            EnemyManager.Instance.EnemyKilled(this.gameObject);
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Root") && !foundRoot)

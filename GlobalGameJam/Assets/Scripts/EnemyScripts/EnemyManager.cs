@@ -37,6 +37,7 @@ public class EnemyManager : MonoBehaviour
         if (timer >= timeBetween && activeEnemies.Count < maxAmount)
         {
             SpawnEnemy();
+            timer = 0;
         }
     }
 
@@ -54,5 +55,11 @@ public class EnemyManager : MonoBehaviour
     {
         Destroy(enemy);
         activeEnemies.Remove(enemy);
+    }
+    public void EnemyKilled(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
+
+        //Göra näringsresurs
     }
 }
