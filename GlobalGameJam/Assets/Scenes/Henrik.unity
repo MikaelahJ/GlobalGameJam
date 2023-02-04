@@ -1047,10 +1047,20 @@ Transform:
   m_Father: {fileID: 2092735580}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &478232947 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6216278732890413513, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
+  m_PrefabInstance: {fileID: 6216278734750835388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &511181779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 07655c96aef4a2545b5df03dcf561eda, type: 3}
   m_PrefabInstance: {fileID: 47595318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &554642344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6216278732890413513, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
+  m_PrefabInstance: {fileID: 1755598305}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &644691679
 GameObject:
@@ -1186,7 +1196,12 @@ MonoBehaviour:
   carbonSupply: 0
   carbonPile: {fileID: 4770742051963636543, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
   allResources: []
-  allGOResourcePoints: []
+  allGOResourcePoints:
+  - {fileID: 554642344}
+  - {fileID: 1473389514}
+  - {fileID: 703543305}
+  - {fileID: 478232947}
+  - {fileID: 1738678577}
   idCounter: 99
 --- !u!4 &701208206
 Transform:
@@ -1203,6 +1218,11 @@ Transform:
   m_Father: {fileID: 764634209}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &703543305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6216278732890413513, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
+  m_PrefabInstance: {fileID: 231314789}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &764634207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,6 +1655,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308744106}
   m_CullTransparentMesh: 1
+--- !u!1 &1473389514 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4770742051963636543, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
+  m_PrefabInstance: {fileID: 124348622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1517717994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1780,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1738678577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4770742051963636543, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
+  m_PrefabInstance: {fileID: 3218624398831446568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1755598305
 PrefabInstance:
   m_ObjectHideFlags: 0

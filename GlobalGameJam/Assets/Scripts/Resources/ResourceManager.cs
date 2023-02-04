@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
                                                                                         // TO DO : 
                                                                                         // ENABLE PURCHASES!
@@ -34,7 +35,6 @@ public class ResourceManager : MonoBehaviour
 
             }
         }
-        // IF MODUOLO 1, FIND COMPONENT WITH ID AND -TOTAL!!!!!!!!!!!!!!!!!!!!!
         waterSupply += totalWaterInput;
         return waterSupply;
     }
@@ -50,6 +50,7 @@ public class ResourceManager : MonoBehaviour
             }
         }
         carbonSupply += totalCarbonInput;
+
         return carbonSupply;
     }
     //______________________________________________ LÄGG TILL RESURSER ATT SAMLA UPP I SLUTET
@@ -64,12 +65,20 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeResource(Resource resurs)
     {
+        Resource resToRekt = null;
+        bool foundOne = false;
         foreach (Resource listResurs in allResources)
         {
             if (resurs.getId() == listResurs.getId())
             {
-                allResources.Remove(listResurs);
+                foundOne = true;
+                resToRekt = listResurs;
+                break;
             }
+        }
+        if (foundOne)
+        {
+            allResources.Remove(resToRekt);
         }
     }
    
@@ -88,16 +97,48 @@ public class ResourceManager : MonoBehaviour
         allGOResourcePoints.Add(_carbonPile);
     }
 
-
+    public void drainAllResourcePoints()
+    {
+        List<ResourcePoint> resourcePoints = new List<ResourcePoint>();
+        foreach (GameObject go in allGOResourcePoints)
+        {
+            var rP = go.GetComponent<ResourcePoint>();
+            resourcePoints.Add(rP);
+        }
+        //totalCarbonInput += resurs.getYield() * (Time.deltaTime * 1);
+        foreach (Resource res in allResources)
+        {
+            var test = resourcePoints.Where(rp => rp.getId() == res.getId()).ToList();
+            foreach(var v in test)
+            {
+                v.drain(v.getYield() * (Time.deltaTime * 1));
+            }
+        }
+    }
     public void rekteningTime()
     {
+        bool foundOneToDestroy = false;
+        GameObject resourceToRekt = null;
+        ResourcePoint rs = null;
         foreach (GameObject go in allGOResourcePoints)
         {
             var resourcePoint = go.GetComponent<ResourcePoint>();
-            ResourcePoint rs = resourcePoint;
-            if(!rs.isAlive()) Destroy(go);
-            removeResource(rs.pumpOut());
+            rs = resourcePoint;
+
+            if (!rs.isAlive())
+            {
+                resourceToRekt = go;
+                foundOneToDestroy = true;
+                break;
+            }
         }
+        if (foundOneToDestroy)
+        {
+            allGOResourcePoints.Remove(resourceToRekt);
+            removeResource(rs.pumpOut());
+            Destroy(resourceToRekt);
+        }
+        
     }
 
 

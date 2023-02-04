@@ -14,16 +14,27 @@ public class ResourcePoint : MonoBehaviour
     {
         id = _id;
     }
+    public int getId()
+    {
+        return id;
+    }
+    public float getYield()
+    {
+        return yield;
+    }
     public Resource pumpOut()
     {
-       
-            remainingResource -= yield;
         if (remainingResource < 0) alive = false;
             return new Resource(type, id, yield);
     }
     public bool isAlive()
     {
         return alive;
+    }
+    public void drain(float drainAmount)
+    {
+        remainingResource -= drainAmount;
+        if (remainingResource < 0) alive = false;
     }
 
 }
