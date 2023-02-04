@@ -4,19 +4,62 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemy;
-    void Start()
+    #region singleton
+    public static EnemyManager Instance = null;
+
+    private void Awake()
     {
-        //Enemy newEnemy = new Enemy(4,5,4f);
-        //EnemyOne newEnemyOne = new EnemyOne(10, 2, 3f);
-        //Instantiate(enemy);
-        //enemy.AddComponent<EnemyOne>();
-        //newEnemy.Test();
-        //newEnemyOne.Test();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
+    #endregion
+
+    [SerializeField] private GameObject molePrefab;
+
+    [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
+    private List<GameObject> activeEnemies = new List<GameObject>();
+    private int maxAmount = 3;
+
+    private float timer;
+    private int timeBetween = 15;
+    public int minTime = 20;
+    public int maxTime = 40;
 
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if (timer >= timeBetween && activeEnemies.Count < maxAmount)
+        {
+            SpawnEnemy();
+            timer = 0;
+        }
+    }
+
+    private void SpawnEnemy()
+    {
+        Transform spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+        var enemy = Instantiate(molePrefab, spawnPos.position, spawnPos.rotation);
+        activeEnemies.Add(enemy);
+
+        timeBetween = Random.Range(minTime, maxTime);
+    }
+
+    public void RemoveEnemy(GameObject enemy)
+    {
+        Destroy(enemy);
+        activeEnemies.Remove(enemy);
+    }
+    public void EnemyKilled(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
+
+        //TODO skapa näringsresurs
     }
 }

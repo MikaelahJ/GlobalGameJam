@@ -101,10 +101,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  damage: 4
+  damage: 2
   speed: 2
   timeBetweenAttacks: 1
   sprite: {fileID: 0}
+  targetRoot: {fileID: 0}
+  foundRoot: 0
+  attacking: 0
 --- !u!50 &109785192736895758
 Rigidbody2D:
   serializedVersion: 4
