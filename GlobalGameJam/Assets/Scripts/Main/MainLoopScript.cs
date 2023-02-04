@@ -33,7 +33,7 @@ public class MainLoopScript : MonoBehaviour
             case gameState.playing:
                 waterResource = resourceManager.getWater();
                 carbonResource = resourceManager.getCarbon();
-
+                displayResources();
                 break;
         }
     }

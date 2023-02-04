@@ -386,6 +386,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9188888343984834062, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
+      propertyPath: id
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
 --- !u!1 &160148442
@@ -681,6 +685,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 181900484}
     m_Modifications:
+    - target: {fileID: 5110638717067194619, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
+      propertyPath: id
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6216278732890413513, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
       propertyPath: m_Name
       value: resourcePointWater (1)
@@ -1754,6 +1762,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 181900484}
     m_Modifications:
+    - target: {fileID: 5110638717067194619, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
+      propertyPath: id
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6216278732890413513, guid: 10f6cfb67e6baae499db5a016b323e9f, type: 3}
       propertyPath: m_Name
       value: resourcePointWater (2)

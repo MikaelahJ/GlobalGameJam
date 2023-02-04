@@ -30,11 +30,13 @@ public class ResourceManager : MonoBehaviour
         {
             if (resurs.getType() == "water")
             {
-                totalWaterInput += resurs.getYield() * (Time.deltaTime * 1); ;
+                totalWaterInput += resurs.getYield() * (Time.deltaTime * 1); 
+
             }
         }
-        waterSupply = totalWaterInput;
-        return totalWaterInput;
+        // IF MODUOLO 1, FIND COMPONENT WITH ID AND -TOTAL!!!!!!!!!!!!!!!!!!!!!
+        waterSupply += totalWaterInput;
+        return waterSupply;
     }
 
     public float getCarbon()
@@ -47,8 +49,8 @@ public class ResourceManager : MonoBehaviour
                 totalCarbonInput += resurs.getYield() * (Time.deltaTime * 1);
             }
         }
-        carbonSupply = totalCarbonInput;
-        return totalCarbonInput;
+        carbonSupply += totalCarbonInput;
+        return carbonSupply;
     }
     //______________________________________________ LÄGG TILL RESURSER ATT SAMLA UPP I SLUTET
     public void addResources(Resource resurs)
@@ -93,7 +95,8 @@ public class ResourceManager : MonoBehaviour
         {
             var resourcePoint = go.GetComponent<ResourcePoint>();
             ResourcePoint rs = resourcePoint;
-            if(!rs.isAlive()) Destroy(go); 
+            if(!rs.isAlive()) Destroy(go);
+            removeResource(rs.pumpOut());
         }
     }
 
