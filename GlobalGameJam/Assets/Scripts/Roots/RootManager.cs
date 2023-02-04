@@ -5,9 +5,9 @@ using UnityEngine;
 public class RootManager : MonoBehaviour
 {
     public static RootManager Instance;
-    public GameObject rootNode;
-    public GameObject root;
-    public GameObject subroot;
+    [SerializeField] private GameObject rootNode;
+    [SerializeField] private GameObject root;
+    [SerializeField] private GameObject subroot;
 
     float lengthOfSubroot = 1;
 
@@ -20,6 +20,13 @@ public class RootManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+
+        if(selectedNode == null)
+        {
+            GameObject leek = Instantiate(rootNode);
+            leek.name = "leek0";
+            selectedNode = leek.GetComponent<Node>();
+        }
     }
 
     // Update is called once per frame
@@ -28,7 +35,6 @@ public class RootManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //float lengthofroot = subroot.GetComponent<SpriteRenderer>().size.y;
             SpawnRoot(selectedNode, cursorPos);
         }
         if (Input.GetMouseButtonDown(1))
@@ -46,7 +52,7 @@ public class RootManager : MonoBehaviour
         Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
         int length = Mathf.FloorToInt(fromStartToEnd.magnitude / oneSubrootDistance.magnitude);
 
-        Node newNode = startNode.SpawnRootNode(oneSubrootDistance * length, transform);
+        Node newNode = startNode.SpawnRootNode(rootNode,oneSubrootDistance * length, transform);
         selectedNode = newNode;
 
         rootNodes.Add(newNode);

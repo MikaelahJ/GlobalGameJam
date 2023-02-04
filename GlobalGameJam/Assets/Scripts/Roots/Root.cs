@@ -7,8 +7,6 @@ public class Root : MonoBehaviour
     public Node parent;
     public Node child;
 
-    //public GameObject subroot;
-
     public List<GameObject> subroots;
 
     Vector2 start;

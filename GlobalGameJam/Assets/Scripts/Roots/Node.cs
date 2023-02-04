@@ -5,14 +5,11 @@ using System;
 
 public class Node : MonoBehaviour
 {
-    public GameObject rootNode;
     public Node parent;
 
     public GameObject RootToParent;
 
     public List<Node> child;
-
-    int childrenAllowed;
 
     public Node(Node parent)
     {
@@ -22,20 +19,16 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        childrenAllowed = UnityEngine.Random.Range(1, 3);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (child.Count < childrenAllowed)
-        //        SpawnRootNode((Vector2)transform.position + Vector2.right);
-        //}
+
     }
 
-    public Node SpawnRootNode(Vector2 position, Transform parent)
+    public Node SpawnRootNode(GameObject rootNode, Vector2 position, Transform parent)
     {
         GameObject newRootNode = Instantiate(rootNode, (Vector2)transform.position + position, Quaternion.identity, parent);
         newRootNode.name = "Node" + (Int32.Parse(gameObject.name[4..]) + 1);
