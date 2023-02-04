@@ -55,8 +55,6 @@ public class Node : MonoBehaviour
             timer += Time.deltaTime;
             if (isAttacking && timer >= timeBetweenAttacks)
             {
-                Debug.Log(timeBetweenAttacks);
-                Debug.Log(timer);
                 enemyInRange.GetComponent<Mole>().LoseHealth(damage);
                 timer = 0f;
             }
