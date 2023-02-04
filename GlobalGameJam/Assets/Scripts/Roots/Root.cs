@@ -17,7 +17,7 @@ public class Root : MonoBehaviour
         int randomRoot = 0;
         int previousRoot = 0;
 
-        for (int i = 1; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
             GameObject newSubRoot = Instantiate(subroot, (Vector2)start.transform.position + (oneSubrootDistance * i), Quaternion.identity, transform);
             while (randomRoot == previousRoot)

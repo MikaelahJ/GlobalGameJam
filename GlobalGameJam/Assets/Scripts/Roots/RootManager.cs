@@ -11,6 +11,7 @@ public class RootManager : MonoBehaviour
 
     float lengthOfSubroot = 1;
 
+
     public List<GameObject> roots;
     public List<Node> rootNodes;
 
@@ -22,7 +23,8 @@ public class RootManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-
+        lengthOfSubroot = subroot.GetComponent<SpriteRenderer>().sprite.rect.height / subroot.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Debug.Log("Length of root in units: " + lengthOfSubroot);
         lineRenderer = GetComponent<LineRenderer>();
 
         if (selectedNode == null)
@@ -61,7 +63,7 @@ public class RootManager : MonoBehaviour
         Vector2 oneSubrootDistance = Vector2.ClampMagnitude(fromStartToEnd, lengthOfSubroot);
         int length = Mathf.FloorToInt(fromStartToEnd.magnitude / oneSubrootDistance.magnitude);
         Debug.Log(length);
-        if (length == 1)
+        if (fromStartToEnd.magnitude == oneSubrootDistance.magnitude)
         {
             Debug.Log("Couldn't spawn root! Too close to selected node!");
             return;
@@ -92,7 +94,7 @@ public class RootManager : MonoBehaviour
 
     public void DrawPreview()
     {
-        Debug.Log("drawing Preview");
+        //Debug.Log("drawing Preview");
         lineRenderer.enabled = true;
         Vector2 endPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         lineRenderer.SetPosition(0, selectedNode.transform.position);
