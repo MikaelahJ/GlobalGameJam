@@ -44,5 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927a7570eed40934da2f6c6a03ada546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subroot: {fileID: 5961703878906202726, guid: 499f29344a899354abd507cec0ef8ad3, type: 3}
+  parent: {fileID: 0}
+  child: {fileID: 0}
   subroots: []
+  rootSprites:
+  - {fileID: 21300000, guid: 805c132d3a16b4849917d525ef7ad13b, type: 3}
+  - {fileID: 21300000, guid: aeb3a39482d6b374d896db5e7ef277f8, type: 3}
+  - {fileID: 21300000, guid: af69527ca377adc45bb04cc03a1128ad, type: 3}
+  - {fileID: 21300000, guid: 4a45fa9bb41e7834a969f2257aeb3468, type: 3}
