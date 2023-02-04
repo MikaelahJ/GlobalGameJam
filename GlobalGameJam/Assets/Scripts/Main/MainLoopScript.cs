@@ -11,18 +11,17 @@ public class MainLoopScript : MonoBehaviour
     public GameObject camera;
     public TextMeshProUGUI tmpWaterCounter;
     public TextMeshProUGUI tmpCarbonCounter;
+    public ResourceManager resourceManager;
 
     //LIST OF ALL ROOTS
 
     public float waterResource;
-    public float dirtResource;
+    public float carbonResource;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        waterResource = 10;
-        dirtResource = 10;
         currentState = gameState.playing;
     }
 
@@ -32,16 +31,17 @@ public class MainLoopScript : MonoBehaviour
         switch(currentState)
         {                                                           // you are playing
             case gameState.playing:
-                resourceTick();
-                
-                
+                waterResource = resourceManager.getWater();
+                carbonResource = resourceManager.getCarbon();
+
                 break;
         }
     }
-    void resourceTick()
+    public void displayResources()
     {
-        waterResource += (Time.deltaTime * 1);
-        Debug.Log("water: "+waterResource);
-        tmpWaterCounter.text = ""+(int)waterResource;
+        tmpWaterCounter.text = "" + (int)waterResource;
+        tmpCarbonCounter.text = "" + (int)carbonResource;
     }
+    
+
 }
