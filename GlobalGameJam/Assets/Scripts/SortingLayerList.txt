@@ -1,0 +1,10 @@
+SortingLayerList
+name:	             value
+Backdrop3D 	 0 - 3
+MainBackground	 4
+MapObjects	 5- 7
+Resources	8-11
+player		12-15
+Enemies		16-19
+Effects		20-23
+GUI		24+
