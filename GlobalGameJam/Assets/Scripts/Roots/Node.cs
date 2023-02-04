@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum Abilities
+{
+    Empty,
+    Vision,
+    Resources,
+    Defence
+}
+
 public class Node : MonoBehaviour
 {
     public Node parent;
-
     public GameObject RootToParent;
 
-    public List<Node> child;
+    public List<Node> children;
+
+    public int level = 1;
+    public GameObject canvasUI;
+    public List<Abilities> abilities = new List<Abilities>();
 
     public Node(Node parent)
     {
@@ -19,13 +30,55 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        for (int i = 0; i < level; i++)
+        {
+            abilities.Add(Abilities.Empty);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void DisplayUI()
+    {
+        foreach (Transform child in canvasUI.transform)
+        {
+            child.gameObject.SetActive(!child.gameObject.activeSelf);
+        }
+    }
+
+    public void AddAbility(Abilities newAbility)
+    {
+        if (abilities.Contains(newAbility))
+        {
+            Debug.Log("Ability already exists!");
+            return;
+        }
+        for (int i = 0; i < abilities.Count; i++)
+        {
+            if (abilities[i] == Abilities.Empty)
+            {
+                Debug.Log("Added new ability: " + newAbility);
+                abilities[i] = newAbility;
+                return;
+            }
+        }
+        Debug.Log("Couldn't add "+ newAbility + ", no slots empty");
+    }
+
+    public void UpgradeNode()
+    {
+        if(parent.level <= level)
+        {
+            Debug.Log("Parent node too low level!");
+            return;
+        }
+        Debug.Log("Upgraded node");
+        level++;
+        abilities.Add(Abilities.Empty);
     }
 
     public Node SpawnRootNode(GameObject rootNode, Vector2 position, Transform parent)
@@ -35,7 +88,7 @@ public class Node : MonoBehaviour
 
         Node newNode = newRootNode.GetComponent<Node>();
         newNode.parent = this;
-        child.Add(newNode);
+        children.Add(newNode);
 
         return newNode;
     }
@@ -43,7 +96,7 @@ public class Node : MonoBehaviour
     public void DestroyNode()
     {
         RootManager.Instance.rootNodes.Remove(this);
-        parent.child.Remove(this);
+        parent.children.Remove(this);
         RootManager.Instance.roots.Remove(RootToParent);
         Destroy(RootToParent);
         Destroy(gameObject);
