@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    public AudioClip growing;
+
     public Node parent;
     public Node child;
 
@@ -22,7 +24,7 @@ public class Root : MonoBehaviour
 
     public void SpawnSubRoots(GameObject subroot, Node start, Vector2 oneSubrootDistance, int length, int level = 1)
     {
-
+        AudioManager.Instance.Play(growing);
 
         for (int i = 0; i < length; i++)
         {

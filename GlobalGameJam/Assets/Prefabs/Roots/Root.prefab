@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927a7570eed40934da2f6c6a03ada546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  growing: {fileID: 8300000, guid: cb3182ecdd7786242bb69bb47085a486, type: 3}
   parent: {fileID: 0}
   child: {fileID: 0}
   subroots: []

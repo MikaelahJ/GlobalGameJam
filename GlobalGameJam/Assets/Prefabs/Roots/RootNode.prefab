@@ -1424,6 +1424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d622479012334004d80475083d1e5895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snapAttack: {fileID: 8300000, guid: 8c3f8d28a1d123d41baba2c6165114f2, type: 3}
   parent: {fileID: 0}
   RootToParent: {fileID: 0}
   children: []
