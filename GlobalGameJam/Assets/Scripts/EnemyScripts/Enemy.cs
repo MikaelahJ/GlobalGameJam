@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public AudioClip gnawingSound;
+
     public int health;
     public int damage;
     public float speed;
@@ -25,8 +27,15 @@ public class Enemy : MonoBehaviour
 
     public void Attack()
     {
+        if (!AudioManager.Instance.EffectsSource.isPlaying)
+            AudioManager.Instance.Play(gnawingSound);
+
         if (targetRoot.GetComponent<RootHealth>().rootDestroyed)
+        {
             RootDestroyed();
+            AudioManager.Instance.EffectsSource.Stop();
+        }
+
         else
             targetRoot.GetComponent<RootHealth>().LoseHealth(damage);
     }

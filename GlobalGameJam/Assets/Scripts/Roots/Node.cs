@@ -15,6 +15,8 @@ public enum Abilities
 
 public class Node : MonoBehaviour
 {
+    public AudioClip snapAttack;
+
     public Node parent;
     public GameObject RootToParent;
 
@@ -55,6 +57,7 @@ public class Node : MonoBehaviour
             timer += Time.deltaTime;
             if (isAttacking && timer >= timeBetweenAttacks)
             {
+                AudioManager.Instance.EffectsSource.PlayOneShot(snapAttack);
                 enemyInRange.GetComponent<Mole>().LoseHealth(damage);
                 timer = 0f;
             }

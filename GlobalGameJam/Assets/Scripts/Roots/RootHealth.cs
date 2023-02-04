@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RootHealth : MonoBehaviour
 {
+    public AudioClip rootBreak;
+
     private int health = 10;
 
     public bool rootDestroyed;
@@ -20,6 +22,7 @@ public class RootHealth : MonoBehaviour
 
     private void RootDestroyed()
     {
+        AudioManager.Instance.EffectsSource.PlayOneShot(rootBreak);
         rootDestroyed = true;
         GetComponent<Collider2D>().enabled = false;
     }
