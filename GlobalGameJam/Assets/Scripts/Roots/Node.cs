@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 public enum Abilities
@@ -143,7 +145,7 @@ public class Node : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //exempel kod för resource detection
+        //exempel kod fï¿½r resource detection
         //if(other.gameObject.TryGetComponent(out Resource resource))
         {
 

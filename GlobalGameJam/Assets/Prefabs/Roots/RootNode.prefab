@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 281413955}
   - component: {fileID: 281413954}
   - component: {fileID: 281413956}
+  - component: {fileID: 1743456799}
   m_Layer: 5
   m_Name: UI_Elements
   m_TagString: Untagged
@@ -213,19 +214,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 281413954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1911714684597312572}
-        m_TargetAssemblyTypeName: Node, Assembly-CSharp
-        m_MethodName: DisplayUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1743456799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281413947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f24a0c9b3243124bab618f38c41a07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &615914840
 GameObject:
   m_ObjectHideFlags: 0
