@@ -12,7 +12,7 @@ public class ResourcePoint : MonoBehaviour
 
     public void setId(int _id)
     {
-        id = id;
+        id = _id;
     }
     public Resource pumpOut()
     {
