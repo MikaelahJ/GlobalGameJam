@@ -215,6 +215,10 @@ MonoBehaviour:
   targetRoot: {fileID: 0}
   foundRoot: 0
   attacking: 0
+  dying: 0
+  deathTimer: 0
+  dead: 0
+  enemyNarrator: {fileID: 8300000, guid: 550bce36f82453c45b44e15666f7eb22, type: 3}
   animator: {fileID: 660095643}
 --- !u!50 &109785192736895758
 Rigidbody2D:

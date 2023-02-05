@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlantGrower : MonoBehaviour
 {
+    public AudioClip endNarrator;
+
     [SerializeField] private Slider plantSliderPrefab;
     private Slider plantSlider;
     private ResourceManager resourceManager;
@@ -39,6 +41,10 @@ public class PlantGrower : MonoBehaviour
             if(plantSlider.value == 100)
             {
                 SceneManager.LoadScene(2);
+            }
+            if(plantSlider.value >= 85)
+            {
+                AudioManager.Instance.PlayNarrator(endNarrator);
             }
         }
         isRunning = false;

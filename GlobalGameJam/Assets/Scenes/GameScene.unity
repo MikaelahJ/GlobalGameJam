@@ -2236,6 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7190c46910b66149992f1e4fb008064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endNarrator: {fileID: 8300000, guid: a0506d9fcba6760448967153067f482a, type: 3}
   plantSliderPrefab: {fileID: 4039002248989294824, guid: ab99781b3a10420459c80ace53c65b56, type: 3}
   isRunning: 0
   canGetWater: 0

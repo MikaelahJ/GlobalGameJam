@@ -3,17 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class EndScreen : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
     public GameObject buttons;
 
+    public AudioClip overNarrator;
+
     private void Awake()
     {
         Invoke(nameof(StartCouRout), 0.3f);
     }
-
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "GameOver")
+        {
+            AudioManager.Instance.PlayNarrator(overNarrator);
+        }
+    }
     private void StartCouRout()
     {
         StartCoroutine(IsVideoPlaying());
