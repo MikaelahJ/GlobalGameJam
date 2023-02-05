@@ -60,6 +60,7 @@ public class RootManager : MonoBehaviour
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         SpawnRoot(selectedNode, cursorPos);
     }
+
     public void SpawnRoot(Node startNode, Vector2 endPosition)
     {
         ClearPreview();
@@ -71,6 +72,14 @@ public class RootManager : MonoBehaviour
         if (fromStartToEnd.magnitude == oneSubrootDistance.magnitude)
         {
             Debug.Log("Couldn't spawn root! Too close to selected node!");
+            return;
+        }
+        int cost = ResourceManager.NEW_NODE;
+        cost += ResourceManager.NEW_SUBROOT * length;
+
+        if (!ResourceManager.Instance.CanBuyUpgrade(cost))
+        {
+            Debug.Log("Can't afford!");
             return;
         }
 

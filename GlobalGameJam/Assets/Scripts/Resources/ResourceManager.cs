@@ -18,6 +18,15 @@ public class ResourceManager : MonoBehaviour
 
     public int idCounter = 99;
 
+    //Resource costs
+    public const int UPGRADE_ROOT = 10;
+    public const int UPGRADE_VISION = 10;
+    public const int UPGRADE_RESOURCE = 10;
+    public const int UPGRADE_DEFENCE = 10;
+    public const int NEW_NODE = 3;
+    public const int NEW_SUBROOT = 1;
+    public const int REPAIR_SUBROOT = 1;
+
     private void Awake()
     {
         if (instance == null) { instance = this; }
@@ -164,6 +173,19 @@ public class ResourceManager : MonoBehaviour
         }
 
     }
+    public bool CanBuyUpgrade(int cost)
+    {
+        float carbonSupply = getCarbonSupply();
+
+        if (cost > carbonSupply)
+        {
+            Debug.Log("Can't afford");
+            return false;
+        }
+        RemoveCarbon(cost);
+        return true;
+    }
+
 
 
     /*

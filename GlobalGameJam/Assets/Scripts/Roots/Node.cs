@@ -30,6 +30,7 @@ public class Node : MonoBehaviour
     public GameObject vision;
 
     public List<ResourcePoint> closeResources = new List<ResourcePoint>();
+    public List<Node> validToAddResource = new List<Node>();
 
     private bool isDefence;
     private bool isAttacking;
@@ -38,6 +39,8 @@ public class Node : MonoBehaviour
     private float timeBetweenAttacks;
     private GameObject enemyInRange;
 
+    private ResourceManager resManager;
+
     public Node(Node parent)
     {
         this.parent = parent;
@@ -45,6 +48,8 @@ public class Node : MonoBehaviour
 
     void Start()
     {
+        resManager = ResourceManager.Instance;
+
         timeBetweenAttacks = 1;
         damage = 2;
         for (int i = 0; i < level; i++)
@@ -96,32 +101,45 @@ public class Node : MonoBehaviour
                 {
                     case Abilities.Vision:
                     {
-                            abilities[i] = newAbility;
-                            AddVision();
-                            break;
+                            if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                            {
+                                abilities[i] = newAbility;
+                                AddVision();
+                                break;
+                            }
+
+                            return;
                     }
                     case Abilities.Resources:
                     {
+                            validToAddResource.Clear();
                             if (TryAddResources(this))
                             {
-                                Debug.Log("Added resource ability");
-                                foreach (ResourcePoint resourcePoint in closeResources)
+                                if(CanBuyUpgrade(validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE))
                                 {
-                                    TryConnectResourcePoint(resourcePoint);
+                                    Debug.Log("Added resource ability");
+
+                                    foreach (Node node in validToAddResource)
+                                    {
+                                        AddResourceAbility(node);
+                                    }
                                 }
+
+                                break;
                             }
-                            else
-                            {
-                                Debug.Log("Could not add resource ability");
-                                return;
-                            }
-                            break;
+                            Debug.Log("Could not add resource ability");
+                            return;
                     }
                     case Abilities.Defence:
                     {
-                            abilities[i] = newAbility;
-                            SetAsDefenceNode();
-                            break;
+                            if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                            {
+
+                                abilities[i] = newAbility;
+                                SetAsDefenceNode();
+                                break;
+                            }
+                            return;
                     }
                 }
                 Debug.Log("Added new ability: " + newAbility);
@@ -193,14 +211,16 @@ public class Node : MonoBehaviour
     {
         if (current.parent.abilities.Contains(Abilities.Resources))
         {
-            AddResourceAbility(current);
+            validToAddResource.Add(current);
+            //AddResourceAbility(current);
             return true;
         }
         else if (current.parent.abilities.Contains(Abilities.Empty))
         {
             if (TryAddResources(current.parent))
             {
-                AddResourceAbility(current);
+                validToAddResource.Add(current);
+                //AddResourceAbility(current);
                 return true;
             }
         }
@@ -214,6 +234,12 @@ public class Node : MonoBehaviour
             if (current.abilities[i] == Abilities.Empty)
             {
                 current.abilities[i] = Abilities.Resources;
+
+                foreach (ResourcePoint resourcePoint in current.closeResources)
+                {
+                    TryConnectResourcePoint(resourcePoint);
+                }
+
                 return;
             }
         }
@@ -235,6 +261,12 @@ public class Node : MonoBehaviour
             isAttacking = true;
             enemyInRange = other.gameObject;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isAttacking = false;
+        enemyInRange = null;
     }
 
     void TryConnectResourcePoint(ResourcePoint resourcePoint)
@@ -263,9 +295,24 @@ public class Node : MonoBehaviour
         return CheckIfConnectedToLeek(current.parent);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    bool CanBuyUpgrade(int cost)
     {
-        isAttacking = false;
-        enemyInRange = null;
+        return ResourceManager.Instance.CanBuyUpgrade(cost);
+    }
+
+    public int GetResourceCost()
+    {
+        validToAddResource.Clear();
+        if (TryAddResources(this))
+        {
+            return validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE;
+        }
+
+        return 999999;
+    }
+
+    public int GetRepairCost()
+    {
+        return RootToParent.GetComponent<Root>().GetRepairCost();
     }
 }
