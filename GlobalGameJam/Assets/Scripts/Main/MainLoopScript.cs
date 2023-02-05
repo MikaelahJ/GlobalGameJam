@@ -6,7 +6,10 @@ using TMPro;
 
 public class MainLoopScript : MonoBehaviour
 {
-    public enum gameState { menu, playing, paused};
+
+    public AudioClip startNarrator;
+
+    public enum gameState { menu, playing, paused };
     private gameState currentState;
     public GameObject camera;
     public TextMeshProUGUI tmpWaterCounter;
@@ -23,12 +26,13 @@ public class MainLoopScript : MonoBehaviour
     void Start()
     {
         currentState = gameState.playing;
+        AudioManager.Instance.PlayNarrator(startNarrator);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(currentState)
+        switch (currentState)
         {                                                           // you are playing
             case gameState.playing:
                 waterResource = resourceManager.getWater();
@@ -45,6 +49,6 @@ public class MainLoopScript : MonoBehaviour
         tmpWaterCounter.text = "" + (int)waterResource;
         tmpCarbonCounter.text = "" + (int)carbonResource;
     }
-    
+
 
 }

@@ -1665,6 +1665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d8c742bb2a10946bd319ce27842f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startNarrator: {fileID: 8300000, guid: f29529c5e2d42ba43a4a96dbe55e1bae, type: 3}
   camera: {fileID: 0}
   tmpWaterCounter: {fileID: 139097262}
   tmpCarbonCounter: {fileID: 175699338}
@@ -2206,7 +2207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slurp: {fileID: 8300000, guid: aeddd0386f69b0f47b4304f3ec7e0446, type: 3}
-  gravel: {fileID: 0}
+  gravel: {fileID: 8300000, guid: 8f049afb135005a41a9b9169f8005aae, type: 3}
+  waterNarrator: {fileID: 8300000, guid: fde96020d57fc864187170ef7f19c034, type: 3}
+  coalNarrator: {fileID: 8300000, guid: c874128811c3c8b47b6ad2eacedfab8f, type: 3}
   waterSupply: 10
   carbonSupply: 100
   carbonPile: {fileID: 4770742051963636543, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
