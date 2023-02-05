@@ -2169,6 +2169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieSound: {fileID: 8300000, guid: 90706826996e61d49ae49facb2079be6, type: 3}
+  resourceManager: {fileID: 1638014524}
   molePrefab: {fileID: 109785192736895792, guid: e47f767bb2b938a40b963a6040875b63, type: 3}
   carbonPrefab: {fileID: 4770742051963636543, guid: f1ef8744884dc5f48a15c19385703a17, type: 3}
   deadMoleSprite: {fileID: 0}
