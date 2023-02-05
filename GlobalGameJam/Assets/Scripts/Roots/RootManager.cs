@@ -16,7 +16,8 @@ public class RootManager : MonoBehaviour
     public List<Node> rootNodes;
 
     public Node selectedNode;
-    
+    public Sprite leekSprite;
+
 
     private LineRenderer lineRenderer;
 
@@ -35,6 +36,7 @@ public class RootManager : MonoBehaviour
             selectedNode = leek.GetComponent<Node>();
             selectedNode.level = 3;
             selectedNode.abilities.Add(Abilities.Resources);
+            leek.GetComponent<SpriteRenderer>().sprite = leekSprite;
 
         }
     }
@@ -110,6 +112,7 @@ public class RootManager : MonoBehaviour
     {
         //Debug.Log("drawing Preview");
         lineRenderer.enabled = true;
+
         Vector2 endPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         lineRenderer.SetPosition(0, selectedNode.transform.position);
         Vector2 fromStartToEnd = endPosition - (Vector2)selectedNode.transform.position;
