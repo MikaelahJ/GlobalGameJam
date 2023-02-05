@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("dead");
-            EnemyManager.Instance.EnemyKilled(this.gameObject);
+            EnemyManager.Instance.EnemyKilled(gameObject);
         }
     }
 

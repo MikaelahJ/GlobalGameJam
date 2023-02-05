@@ -16,6 +16,7 @@ public class RootManager : MonoBehaviour
     public List<Node> rootNodes;
 
     public Node selectedNode;
+    
 
     private LineRenderer lineRenderer;
 
