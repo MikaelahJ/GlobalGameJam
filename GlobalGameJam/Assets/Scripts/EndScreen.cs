@@ -14,7 +14,7 @@ public class EndScreen : MonoBehaviour
 
     private void Awake()
     {
-        Invoke(nameof(StartCouRout), 0.3f);
+        Invoke(nameof(StartCouRout), 1f);
     }
     void Start()
     {
@@ -34,7 +34,6 @@ public class EndScreen : MonoBehaviour
         {
             yield return null;
         }
-
         buttons.SetActive(true);
     }
 }
