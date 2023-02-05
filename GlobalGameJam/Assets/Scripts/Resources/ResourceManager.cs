@@ -62,10 +62,15 @@ public class ResourceManager : MonoBehaviour
     {
         return carbonSupply;
     }
+    public float getWaterSupply()
+    {
+        return waterSupply;
+    }
 
     public void RemoveWater()
     {
         waterSupply -= 1f;
+        if (waterSupply < 0) waterSupply = 0;
     }
     public void RemoveCarbon(float x)
     {
