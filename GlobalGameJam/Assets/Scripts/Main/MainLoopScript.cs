@@ -8,6 +8,7 @@ public class MainLoopScript : MonoBehaviour
 {
 
     public AudioClip startNarrator;
+    public AudioClip music;
 
     public enum gameState { menu, playing, paused };
     private gameState currentState;
@@ -27,6 +28,7 @@ public class MainLoopScript : MonoBehaviour
     {
         currentState = gameState.playing;
         AudioManager.Instance.PlayNarrator(startNarrator);
+        AudioManager.Instance.PlayMusic(music);
     }
 
     // Update is called once per frame
