@@ -51,6 +51,7 @@ MonoBehaviour:
   roots: []
   rootNodes: []
   selectedNode: {fileID: 0}
+  leekSprite: {fileID: 21300000, guid: d63e9f34c06d55545b1f96292c2134e3, type: 3}
 --- !u!120 &6968470179514527236
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -59,7 +60,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2448967433090364703}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -89,8 +90,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2123596425
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
