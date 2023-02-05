@@ -23,9 +23,14 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource EffectsSource;
     public AudioSource MusicSource;
+    public AudioSource NarratorSource;
 
     public float LowPitchRange = 0.95f;
     public float HighPitchRange = 1.05f;
+
+    public bool hasPlayedNarrator;
+    public bool hasPlayedWater;
+    public bool hasPlayedCoal;
 
     public void Play(AudioClip clip)
     {
@@ -34,7 +39,13 @@ public class AudioManager : MonoBehaviour
         EffectsSource.clip = clip;
         EffectsSource.Play();
     }
-    
+
+    public void PlayNarrator(AudioClip clip)
+    {
+        NarratorSource.clip = clip;
+        NarratorSource.Play();
+    }
+
     public void PlayMusic(AudioClip clip)
     {
         MusicSource.clip = clip;

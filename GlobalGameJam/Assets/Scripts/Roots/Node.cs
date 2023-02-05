@@ -297,7 +297,10 @@ public class Node : MonoBehaviour
     void TryConnectResourcePoint(ResourcePoint resourcePoint, Node node)
     {
         if (CheckIfConnectedToLeek(node))
+        {
             ResourceManager.Instance.addResources(resourcePoint.pumpOut());
+            
+        }
     }
 
     public bool CheckIfConnectedToLeek()
