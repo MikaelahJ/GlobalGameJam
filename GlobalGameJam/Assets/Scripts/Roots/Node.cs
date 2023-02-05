@@ -406,6 +406,8 @@ public class Node : MonoBehaviour
         {
             Debug.Log("Repaired roots");
             RootToParent.GetComponent<Root>().RepairRoots();
+
+            UpdateRepairCost();
             return;
         }
         Debug.Log("Can't afford to repair roots");
