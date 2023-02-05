@@ -169,7 +169,9 @@ public class Node : MonoBehaviour
 
     void AddVision()
     {
-        vision.SetActive(true);
+        GameObject newVision = Instantiate(vision);
+        newVision.transform.position = transform.position;
+        newVision.SetActive(true);
     }
 
     private void SetAsDefenceNode()
