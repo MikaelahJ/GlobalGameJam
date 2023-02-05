@@ -35,8 +35,8 @@ public class EnemyManager : MonoBehaviour
 
     private float timer;
     private int timeBetween = 15;
-    public int minTime = 20;
-    public int maxTime = 40;
+    public int minTime = 10;
+    public int maxTime = 30;
 
     void Update()
     {

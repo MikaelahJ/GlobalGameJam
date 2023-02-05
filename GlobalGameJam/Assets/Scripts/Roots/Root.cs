@@ -9,9 +9,13 @@ public class Root : MonoBehaviour
     public Node parent;
     public Node child;
 
+    public int repairCost = 1;
     public bool isBroken = false;
 
     public List<GameObject> subroots;
+
+    public List<RootHealth> brokenRoots = new List<RootHealth>();
+
     public Dictionary<int, List<Sprite>> allRootSprites = new Dictionary<int, List<Sprite>>();
     public List<Sprite> lvl1RootSprites;
     public List<Sprite> lvl2RootSprites;
@@ -67,4 +71,20 @@ public class Root : MonoBehaviour
             SetRootSprite(root, level);
         }
     }
+
+    public int GetRepairCost()
+    {
+        return brokenRoots.Count * repairCost;
+    }
+
+    public void RepairRoots()
+    {
+        foreach (RootHealth rootHealth in brokenRoots)
+        {
+            rootHealth.RepairRoot();
+        }
+        brokenRoots.Clear();
+    }
+
+
 }

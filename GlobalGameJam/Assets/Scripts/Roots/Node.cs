@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public enum Abilities
 {
@@ -30,6 +31,7 @@ public class Node : MonoBehaviour
     public GameObject vision;
 
     public List<ResourcePoint> closeResources = new List<ResourcePoint>();
+    public List<Node> validToAddResource = new List<Node>();
 
     private bool isDefence;
     private bool isAttacking;
@@ -37,6 +39,12 @@ public class Node : MonoBehaviour
     private float timer;
     private float timeBetweenAttacks;
     private GameObject enemyInRange;
+
+    [SerializeField] private TextMeshProUGUI resourceText;
+    [SerializeField] private TextMeshProUGUI upgradeText;
+    [SerializeField] private TextMeshProUGUI visionText;
+    [SerializeField] private TextMeshProUGUI defenseText;
+    [SerializeField] private TextMeshProUGUI repairText;
 
     public Node(Node parent)
     {
@@ -79,6 +87,10 @@ public class Node : MonoBehaviour
         {
             child.gameObject.SetActive(enabled);
         }
+
+        UpdateResourceCost();
+        UpdateRepairCost();
+
     }
 
     public void AddAbility(Abilities newAbility)
@@ -96,32 +108,45 @@ public class Node : MonoBehaviour
                 {
                     case Abilities.Vision:
                     {
-                            abilities[i] = newAbility;
-                            AddVision();
-                            break;
+                            if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                            {
+                                abilities[i] = newAbility;
+                                AddVision();
+                                break;
+                            }
+
+                            return;
                     }
                     case Abilities.Resources:
                     {
+                            validToAddResource.Clear();
                             if (TryAddResources(this))
                             {
-                                Debug.Log("Added resource ability");
-                                foreach (ResourcePoint resourcePoint in closeResources)
+                                if(CanBuyUpgrade(validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE))
                                 {
-                                    TryConnectResourcePoint(resourcePoint);
+                                    Debug.Log("Added resource ability");
+
+                                    foreach (Node node in validToAddResource)
+                                    {
+                                        AddResourceAbility(node);
+                                    }
                                 }
+
+                                break;
                             }
-                            else
-                            {
-                                Debug.Log("Could not add resource ability");
-                                return;
-                            }
-                            break;
+                            Debug.Log("Could not add resource ability");
+                            return;
                     }
                     case Abilities.Defence:
                     {
-                            abilities[i] = newAbility;
-                            SetAsDefenceNode();
-                            break;
+                            if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                            {
+
+                                abilities[i] = newAbility;
+                                SetAsDefenceNode();
+                                break;
+                            }
+                            return;
                     }
                 }
                 Debug.Log("Added new ability: " + newAbility);
@@ -191,16 +216,23 @@ public class Node : MonoBehaviour
 
     private bool TryAddResources(Node current)
     {
+        if (current.abilities.Contains(Abilities.Resources))
+        {
+            return false;
+        }
+
         if (current.parent.abilities.Contains(Abilities.Resources))
         {
-            AddResourceAbility(current);
+            validToAddResource.Add(current);
+            //AddResourceAbility(current);
             return true;
         }
         else if (current.parent.abilities.Contains(Abilities.Empty))
         {
             if (TryAddResources(current.parent))
             {
-                AddResourceAbility(current);
+                validToAddResource.Add(current);
+                //AddResourceAbility(current);
                 return true;
             }
         }
@@ -214,6 +246,12 @@ public class Node : MonoBehaviour
             if (current.abilities[i] == Abilities.Empty)
             {
                 current.abilities[i] = Abilities.Resources;
+
+                foreach (ResourcePoint resourcePoint in current.closeResources)
+                {
+                    TryConnectResourcePoint(resourcePoint, current);
+                }
+
                 return;
             }
         }
@@ -226,7 +264,7 @@ public class Node : MonoBehaviour
         {
             Debug.Log("found resource");
             closeResources.Add(resourcePoint);
-            TryConnectResourcePoint(resourcePoint);
+            TryConnectResourcePoint(resourcePoint, this);
             
         }
 
@@ -237,9 +275,15 @@ public class Node : MonoBehaviour
         }
     }
 
-    void TryConnectResourcePoint(ResourcePoint resourcePoint)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (CheckIfConnectedToLeek(this))
+        isAttacking = false;
+        enemyInRange = null;
+    }
+
+    void TryConnectResourcePoint(ResourcePoint resourcePoint, Node node)
+    {
+        if (CheckIfConnectedToLeek(node))
             ResourceManager.Instance.addResources(resourcePoint.pumpOut());
     }
 
@@ -263,9 +307,43 @@ public class Node : MonoBehaviour
         return CheckIfConnectedToLeek(current.parent);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    bool CanBuyUpgrade(int cost)
     {
-        isAttacking = false;
-        enemyInRange = null;
+        return ResourceManager.Instance.CanBuyUpgrade(cost);
+    }
+
+    public string GetResourceCost()
+    {
+        validToAddResource.Clear();
+        if (TryAddResources(this))
+        {
+            return (validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE).ToString();
+        }
+
+        return "X";
+    }
+
+    public void UpdateResourceCost()
+    {
+        resourceText.text = GetResourceCost();
+    }
+
+
+    public void UpdateRepairCost()
+    {
+        if(parent == null) { return; }
+        repairText.text = "Repair: " + RootToParent.GetComponent<Root>().GetRepairCost().ToString();
+    }
+
+    public void RepairRoot()
+    {
+        int cost = RootToParent.GetComponent<Root>().GetRepairCost();
+        if (ResourceManager.Instance.CanBuyUpgrade(cost))
+        {
+            Debug.Log("Repaired roots");
+            RootToParent.GetComponent<Root>().RepairRoots();
+            return;
+        }
+        Debug.Log("Can't afford to repair roots");
     }
 }

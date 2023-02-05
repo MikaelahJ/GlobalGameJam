@@ -16,7 +16,8 @@ public class RootManager : MonoBehaviour
     public List<Node> rootNodes;
 
     public Node selectedNode;
-    
+    public Sprite leekSprite;
+
 
     private LineRenderer lineRenderer;
 
@@ -35,6 +36,7 @@ public class RootManager : MonoBehaviour
             selectedNode = leek.GetComponent<Node>();
             selectedNode.level = 3;
             selectedNode.abilities.Add(Abilities.Resources);
+            leek.GetComponent<SpriteRenderer>().sprite = leekSprite;
 
         }
     }
@@ -60,6 +62,7 @@ public class RootManager : MonoBehaviour
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         SpawnRoot(selectedNode, cursorPos);
     }
+
     public void SpawnRoot(Node startNode, Vector2 endPosition)
     {
         ClearPreview();
@@ -71,6 +74,14 @@ public class RootManager : MonoBehaviour
         if (fromStartToEnd.magnitude == oneSubrootDistance.magnitude)
         {
             Debug.Log("Couldn't spawn root! Too close to selected node!");
+            return;
+        }
+        int cost = ResourceManager.NEW_NODE;
+        cost += ResourceManager.NEW_SUBROOT * length;
+
+        if (!ResourceManager.Instance.CanBuyUpgrade(cost))
+        {
+            Debug.Log("Can't afford!");
             return;
         }
 
@@ -101,6 +112,7 @@ public class RootManager : MonoBehaviour
     {
         //Debug.Log("drawing Preview");
         lineRenderer.enabled = true;
+
         Vector2 endPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         lineRenderer.SetPosition(0, selectedNode.transform.position);
         Vector2 fromStartToEnd = endPosition - (Vector2)selectedNode.transform.position;
