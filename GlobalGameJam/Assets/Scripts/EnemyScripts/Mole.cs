@@ -8,7 +8,6 @@ public class Mole : Enemy
     public Mole(int health, int damage, float speed, float timeBetweenAttacks) : base(health, damage, speed, timeBetweenAttacks)
     { }
 
-    private bool hasPlayedNarrator;
     public AudioClip enemyNarrator;
 
     private SpriteRenderer spriteRenderer;
@@ -36,12 +35,12 @@ public class Mole : Enemy
         }
         else if (attacking)
         {
-            if (!hasPlayedNarrator)
+            if (!AudioManager.Instance.hasPlayedNarrator)
             {
                 AudioManager.Instance.PlayNarrator(enemyNarrator);
             }
 
-                hasPlayedNarrator = true;
+            AudioManager.Instance.hasPlayedNarrator = true;
 
             animator.SetBool("Gnaw", true);
             timer += Time.deltaTime;

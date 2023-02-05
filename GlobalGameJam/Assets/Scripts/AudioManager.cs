@@ -28,6 +28,10 @@ public class AudioManager : MonoBehaviour
     public float LowPitchRange = 0.95f;
     public float HighPitchRange = 1.05f;
 
+    public bool hasPlayedNarrator;
+    public bool hasPlayedWater;
+    public bool hasPlayedCoal;
+
     public void Play(AudioClip clip)
     {
         float randomPitch = Random.Range(LowPitchRange, HighPitchRange);

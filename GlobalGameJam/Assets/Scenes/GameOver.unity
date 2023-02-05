@@ -844,7 +844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 48886948}
   buttons: {fileID: 333889857}
-  overNarrator: {fileID: 8300000, guid: bfca775b499b2364bb983655dc79b50c, type: 3}
+  overNarrator: {fileID: 8300000, guid: 1a8dbf54fc191ff488b39f65e3898276, type: 3}
 --- !u!1 &765179126
 GameObject:
   m_ObjectHideFlags: 0

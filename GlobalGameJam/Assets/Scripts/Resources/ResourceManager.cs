@@ -11,6 +11,10 @@ public class ResourceManager : MonoBehaviour
     public AudioClip gravel;
 
     private static ResourceManager instance;
+
+    public AudioClip waterNarrator;
+    public AudioClip coalNarrator;
+
     public static ResourceManager Instance { get { return instance; } }
     public float waterSupply;
     public float carbonSupply;
@@ -97,6 +101,20 @@ public class ResourceManager : MonoBehaviour
     //______________________________________________ LÄGG TILL RESURSER ATT SAMLA UPP I SLUTET
     public void addResources(Resource resurs)
     {
+        if (!AudioManager.Instance.hasPlayedCoal)
+        {
+            if (resurs.getType() == "carbon")
+                AudioManager.Instance.PlayNarrator(coalNarrator);
+
+            AudioManager.Instance.hasPlayedCoal = true;
+        }
+        if (!AudioManager.Instance.hasPlayedWater)
+        {
+            if (resurs.getType() == "water")
+                AudioManager.Instance.PlayNarrator(waterNarrator);
+            AudioManager.Instance.hasPlayedWater = true;
+        }
+
         bool freeToAdd = true;
         foreach (Resource listResurs in allResources)
         {
