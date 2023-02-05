@@ -88,17 +88,20 @@ public class Node : MonoBehaviour
             child.gameObject.SetActive(enabled);
         }
 
+        UpdateDefenseCost();
+        UpdateVisionCost();
+        UpdateUpgradeCost();
         UpdateResourceCost();
         UpdateRepairCost();
 
     }
 
-    public void AddAbility(Abilities newAbility)
+    public string AddAbility(Abilities newAbility)
     {
         if (abilities.Contains(newAbility))
         {
             Debug.Log("Ability already exists!");
-            return;
+            return "Already\nexists";
         }
         for (int i = 0; i < abilities.Count; i++)
         {
@@ -115,7 +118,7 @@ public class Node : MonoBehaviour
                                 break;
                             }
 
-                            return;
+                            return "No\nCarbon";
                     }
                     case Abilities.Resources:
                     {
@@ -130,43 +133,50 @@ public class Node : MonoBehaviour
                                     {
                                         AddResourceAbility(node);
                                     }
+                                    break;
                                 }
 
-                                break;
+                                return "No\nCarbon";
                             }
                             Debug.Log("Could not add resource ability");
-                            return;
-                    }
+                            return "No empty\nroots above";
+                        }
                     case Abilities.Defence:
                     {
-                            if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                            if(children.Count == 0)
                             {
+                                if (CanBuyUpgrade(ResourceManager.UPGRADE_VISION))
+                                {
 
-                                abilities[i] = newAbility;
-                                SetAsDefenceNode();
-                                break;
+                                    abilities[i] = newAbility;
+                                    SetAsDefenceNode();
+                                    break;
+                                }
+                                return "No\nCarbon";
                             }
-                            return;
-                    }
+                            return "Must be\nend root";
+                        }
                 }
                 Debug.Log("Added new ability: " + newAbility);
-                return;
+                return "Upgraded";
             }
         }
         Debug.Log("Couldn't add " + newAbility + ", no slots empty");
+        return "Too weak\nroot";
     }
 
     public void UpgradeNode()
     {
         if (parent.level <= level)
         {
+            upgradeText.text = "Root to\nleek too weak";
             Debug.Log("Parent node too low level!");
             return;
         }
 
-
         Debug.Log("Upgraded node");
         level++;
+        upgradeText.text = "Level "+ level + "\ncost: " + ResourceManager.UPGRADE_ROOT;
         RootToParent.GetComponent<Root>().LevelUpRoots(level);
         abilities.Add(Abilities.Empty);
     }
@@ -212,6 +222,7 @@ public class Node : MonoBehaviour
         hitCollider.AddComponent<CircleCollider2D>();
         hitCollider.GetComponent<CircleCollider2D>().isTrigger = true;
         hitCollider.GetComponent<CircleCollider2D>().radius = 3;
+
     }
 
     private bool TryAddResources(Node current)
@@ -332,17 +343,52 @@ public class Node : MonoBehaviour
 
         return "X";
     }
+    public void UpdateUpgradeCost()
+    {
+        if(level < 3)
+        {
+            upgradeText.text = "Level " + level + "\ncost: " + ResourceManager.UPGRADE_ROOT;
+        }
+        else
+        {
+            upgradeText.text = "Level " + level + "\nMAX";
+        }
+    }
+
+    public void UpdateVisionCost()
+    {
+        if (abilities.Contains(Abilities.Vision))
+        {
+            visionText.text = "Upgraded";
+        }
+        else
+        {
+            visionText.text = "Vision\nCost: " + ResourceManager.UPGRADE_VISION; 
+        }
+    }
+
+    public void UpdateDefenseCost()
+    {
+        if (abilities.Contains(Abilities.Defence))
+        {
+            defenseText.text = "Upgraded";
+        }
+        else
+        {
+            defenseText.text = "Attack\nCost: " + ResourceManager.UPGRADE_DEFENCE;
+        }
+    }
 
     public void UpdateResourceCost()
     {
-        resourceText.text = GetResourceCost();
+        resourceText.text = "Resource\nCost: " + GetResourceCost();
     }
 
 
     public void UpdateRepairCost()
     {
         if(parent == null) { return; }
-        repairText.text = "Repair: " + RootToParent.GetComponent<Root>().GetRepairCost().ToString();
+        repairText.text = "Repair\nCost: " + RootToParent.GetComponent<Root>().GetRepairCost().ToString();
     }
 
     public void RepairRoot()

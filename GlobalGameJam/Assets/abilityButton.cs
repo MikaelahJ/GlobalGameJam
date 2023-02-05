@@ -27,6 +27,7 @@ public class abilityButton : MonoBehaviour
 
     public void OnbuttonClick()
     {
-        node.AddAbility(ability);
+        string response = node.AddAbility(ability);
+        GetComponentInChildren<TextMeshProUGUI>().text = response;
     }
 }
