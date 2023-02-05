@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa4f3c1f89283143b9c4ff341f93589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainingResource: 20
+  remainingResource: 50
   type: carbon
   yield: 2
   id: 2
