@@ -43,7 +43,6 @@ public class Node : MonoBehaviour
         this.parent = parent;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         timeBetweenAttacks = 1;
@@ -71,9 +70,14 @@ public class Node : MonoBehaviour
 
     public void DisplayUI()
     {
+        DisplayUI(!canvasUI.transform.GetChild(0).gameObject.activeSelf);
+    }
+
+    public void DisplayUI(bool enabled)
+    {
         foreach (Transform child in canvasUI.transform)
         {
-            child.gameObject.SetActive(!child.gameObject.activeSelf);
+            child.gameObject.SetActive(enabled);
         }
     }
 
@@ -169,7 +173,9 @@ public class Node : MonoBehaviour
 
     void AddVision()
     {
-        vision.SetActive(true);
+        GameObject newVision = Instantiate(vision);
+        newVision.transform.position = transform.position;
+        newVision.SetActive(true);
     }
 
     private void SetAsDefenceNode()

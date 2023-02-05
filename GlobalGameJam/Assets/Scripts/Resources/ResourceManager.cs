@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-                                                                                        // TO DO : 
-                                                                                        // ENABLE PURCHASES!
-                                                                                        // FUNCTION FOR DRAINING WATER
+// TO DO : 
+// ENABLE PURCHASES!
+// FUNCTION FOR DRAINING WATER
 public class ResourceManager : MonoBehaviour
 {
     private static ResourceManager instance;
-    public static ResourceManager Instance { get { return instance;  } }
+    public static ResourceManager Instance { get { return instance; } }
     public float waterSupply;
     public float carbonSupply;
     public GameObject carbonPile;
     public List<Resource> allResources;
     public List<GameObject> allGOResourcePoints = new List<GameObject>();
-  //  public List<ResourcePoint> allResourcePoints = new List<ResourcePoint>();
+    //  public List<ResourcePoint> allResourcePoints = new List<ResourcePoint>();
 
     public int idCounter = 99;
 
@@ -24,6 +24,7 @@ public class ResourceManager : MonoBehaviour
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
+
     public float getWater()
     {
         float totalWaterInput = 0.0f;
@@ -31,12 +32,26 @@ public class ResourceManager : MonoBehaviour
         {
             if (resurs.getType() == "water")
             {
-                totalWaterInput += resurs.getYield() * (Time.deltaTime * 1); 
-
+                totalWaterInput += resurs.getYield() * (Time.deltaTime * 1);
             }
         }
         waterSupply += totalWaterInput;
+
+        if (waterSupply == 0 && !GetComponent<PlantGrower>().isRunning)
+        {
+            //TODO plant dies stuff, Bool plantDying = true
+        }
+        else if (waterSupply != 0 && !GetComponent<PlantGrower>().isRunning)
+        {
+            GetComponent<PlantGrower>().StartGrow((int)waterSupply);
+        }
+
         return waterSupply;
+    }
+
+    public void RemoveWater()
+    {
+        waterSupply -= 1f;
     }
 
     public float getCarbon()
@@ -81,7 +96,7 @@ public class ResourceManager : MonoBehaviour
             allResources.Remove(resToRekt);
         }
     }
-   
+
     public int getNewId()
     {
         idCounter--;
@@ -109,7 +124,7 @@ public class ResourceManager : MonoBehaviour
         foreach (Resource res in allResources)
         {
             var test = resourcePoints.Where(rp => rp.getId() == res.getId()).ToList();
-            foreach(var v in test)
+            foreach (var v in test)
             {
                 v.drain(v.getYield() * (Time.deltaTime * 1));
             }
@@ -138,7 +153,7 @@ public class ResourceManager : MonoBehaviour
             removeResource(rs.pumpOut());
             Destroy(resourceToRekt);
         }
-        
+
     }
 
 
