@@ -26,9 +26,9 @@ public class ResourceManager : MonoBehaviour
     public int idCounter = 99;
 
     //Resource costs
-    public const int UPGRADE_ROOT = 10;
-    public const int UPGRADE_VISION = 10;
-    public const int UPGRADE_RESOURCE = 10;
+    public const int UPGRADE_ROOT = 2;
+    public const int UPGRADE_VISION = 5;
+    public const int UPGRADE_RESOURCE = 5;
     public const int UPGRADE_DEFENCE = 10;
     public const int NEW_NODE = 3;
     public const int NEW_SUBROOT = 1;
