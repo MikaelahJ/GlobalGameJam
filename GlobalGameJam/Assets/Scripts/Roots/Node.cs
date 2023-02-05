@@ -71,9 +71,14 @@ public class Node : MonoBehaviour
 
     public void DisplayUI()
     {
+        DisplayUI(!canvasUI.transform.GetChild(0).gameObject.activeSelf);
+    }
+
+    public void DisplayUI(bool enabled)
+    {
         foreach (Transform child in canvasUI.transform)
         {
-            child.gameObject.SetActive(!child.gameObject.activeSelf);
+            child.gameObject.SetActive(enabled);
         }
     }
 

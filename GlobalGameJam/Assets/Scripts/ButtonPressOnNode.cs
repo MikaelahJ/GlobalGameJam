@@ -26,10 +26,17 @@ public class ButtonPressOnNode : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        RootManager.Instance.selectedNode = GetComponentInParent<Node>();
+        Node previousNode = RootManager.Instance.selectedNode;
+        Node currentNode = GetComponentInParent<Node>();
+
+        if(previousNode != null && previousNode != currentNode)
+        {
+            previousNode.DisplayUI(false);
+        }
+
+        RootManager.Instance.selectedNode = currentNode;
         isPressed = true;
-        //Output the name of the GameObject that is being clicked
-        //Debug.Log(name + "Game Object Click in Progress");
+
     }
 
     //Detect if clicks are no longer registering
@@ -46,6 +53,11 @@ public class ButtonPressOnNode : MonoBehaviour, IPointerDownHandler, IPointerUpH
     public void OnPointerExit(PointerEventData eventData)
     {
         isInside = false;
+
+        if (isPressed)
+        {
+            GetComponentInParent<Node>().DisplayUI(false);
+        }
         //Debug.Log("The cursor exited the selectable UI element.");
     }
 
