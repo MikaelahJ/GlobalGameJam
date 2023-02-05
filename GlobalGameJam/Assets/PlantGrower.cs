@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlantGrower : MonoBehaviour
 {
@@ -18,14 +19,12 @@ public class PlantGrower : MonoBehaviour
         plantSlider = Instantiate(plantSliderPrefab, transform.GetChild(0));
     }
 
-
     public void StartGrow(int availableWater)
     {
         if (isRunning)
             return;
 
         StartCoroutine(GrowPlant(availableWater));
-
     }
 
     public IEnumerator GrowPlant(int availableWater)
@@ -37,6 +36,10 @@ public class PlantGrower : MonoBehaviour
             yield return new WaitForSeconds(1);
             plantSlider.value += 1;
             resourceManager.RemoveWater();
+            if(plantSlider.value == 100)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
         isRunning = false;
     }
