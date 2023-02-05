@@ -169,7 +169,7 @@ public class Node : MonoBehaviour
     {
         if (parent.level <= level)
         {
-            upgradeText.text = "Root to\nleek too weak";
+            upgradeText.text = "Above root\ntoo weak!";
             Debug.Log("Parent node too low level!");
             return;
         }
@@ -381,7 +381,15 @@ public class Node : MonoBehaviour
 
     public void UpdateResourceCost()
     {
-        resourceText.text = "Resource\nCost: " + GetResourceCost();
+        if (abilities.Contains(Abilities.Resources))
+        {
+            resourceText.text = "Upgraded";
+        }
+        else
+        {
+            resourceText.text = "Resource\nCost: " + GetResourceCost();
+        }
+
     }
 
 
