@@ -7,6 +7,9 @@ using UnityEngine;
 // FUNCTION FOR DRAINING WATER
 public class ResourceManager : MonoBehaviour
 {
+    public AudioClip slurp;
+    public AudioClip gravel;
+
     private static ResourceManager instance;
     public static ResourceManager Instance { get { return instance; } }
     public float waterSupply;
@@ -99,7 +102,12 @@ public class ResourceManager : MonoBehaviour
         {
             if (resurs.getId() == listResurs.getId()) freeToAdd = false;
         }
-        if (freeToAdd) allResources.Add(resurs);
+        if (freeToAdd)
+        {
+            if (resurs.getType() == "water") AudioManager.Instance.Play(slurp);
+            else AudioManager.Instance.Play(gravel);
+            allResources.Add(resurs);
+        }
     }
     public void removeResource(Resource resurs)
     {
