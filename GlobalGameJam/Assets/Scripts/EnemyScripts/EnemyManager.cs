@@ -21,7 +21,13 @@ public class EnemyManager : MonoBehaviour
     #endregion
     public AudioClip dieSound;
 
+    [SerializeField] private ResourceManager resourceManager;
+
+
     [SerializeField] private GameObject molePrefab;
+    [SerializeField] private GameObject carbonPrefab;
+
+    [SerializeField] private Sprite deadMoleSprite;
 
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
     private List<GameObject> activeEnemies = new List<GameObject>();
@@ -64,6 +70,6 @@ public class EnemyManager : MonoBehaviour
         activeEnemies.Remove(enemy);
         enemy.SetActive(false);
 
-        //TODO skapa näringsresurs
+        resourceManager.spawnInCarbon(enemy.transform.position);
     }
 }

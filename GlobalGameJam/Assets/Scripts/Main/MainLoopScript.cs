@@ -39,6 +39,7 @@ public class MainLoopScript : MonoBehaviour
                 break;
         }
     }
+
     public void displayResources()
     {
         tmpWaterCounter.text = "" + (int)waterResource;
