@@ -247,6 +247,8 @@ public class Node : MonoBehaviour
             {
                 current.abilities[i] = Abilities.Resources;
 
+                RootManager.Instance.isResourceNode.Add(this);
+
                 foreach (ResourcePoint resourcePoint in current.closeResources)
                 {
                     TryConnectResourcePoint(resourcePoint, current);
@@ -287,7 +289,12 @@ public class Node : MonoBehaviour
             ResourceManager.Instance.addResources(resourcePoint.pumpOut());
     }
 
-    bool CheckIfConnectedToLeek(Node current)
+    public bool CheckIfConnectedToLeek()
+    {
+        return CheckIfConnectedToLeek(this);
+    }
+
+    public bool CheckIfConnectedToLeek(Node current)
     {
         if(current.parent == null)
         {

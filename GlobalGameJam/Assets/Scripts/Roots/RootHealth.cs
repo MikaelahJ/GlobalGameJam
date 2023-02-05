@@ -26,8 +26,7 @@ public class RootHealth : MonoBehaviour
         AudioManager.Instance.EffectsSource.PlayOneShot(rootBreak);
         rootDestroyed = true;
 
-        GetComponentInParent<Root>().isBroken = true;
-        GetComponentInParent<Root>().brokenRoots.Add(this);
+        GetComponentInParent<Root>().BreakRoots(this);
 
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
@@ -38,7 +37,7 @@ public class RootHealth : MonoBehaviour
         health = maxHealth;
         rootDestroyed = false;
 
-        GetComponentInParent<Root>().isBroken = false;
+        //GetComponentInParent<Root>().isBroken = false;
         //GetComponentInParent<Root>().brokenRoots.Remove(this);
 
         GetComponent<Collider2D>().enabled = true;

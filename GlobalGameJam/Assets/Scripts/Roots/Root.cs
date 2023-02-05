@@ -72,6 +72,13 @@ public class Root : MonoBehaviour
         }
     }
 
+    public void BreakRoots(RootHealth root)
+    {
+        isBroken = true;
+        brokenRoots.Add(root);
+        RootManager.Instance.CheckAllResourceConnections();
+    }
+
     public int GetRepairCost()
     {
         return brokenRoots.Count * repairCost;
@@ -79,11 +86,14 @@ public class Root : MonoBehaviour
 
     public void RepairRoots()
     {
+        isBroken = false;
         foreach (RootHealth rootHealth in brokenRoots)
         {
             rootHealth.RepairRoot();
         }
         brokenRoots.Clear();
+
+        RootManager.Instance.CheckAllResourceConnections();
     }
 
 

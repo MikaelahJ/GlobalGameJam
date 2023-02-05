@@ -11,7 +11,6 @@ public class RootManager : MonoBehaviour
 
     float lengthOfSubroot = 1;
 
-
     public List<GameObject> roots;
     public List<Node> rootNodes;
 
@@ -20,6 +19,8 @@ public class RootManager : MonoBehaviour
 
 
     private LineRenderer lineRenderer;
+
+    public List<Node> isResourceNode = new List<Node>();
 
     // Start is called before the first frame update
     void Start()
@@ -42,19 +43,47 @@ public class RootManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        //SpawnRoot(selectedNode, cursorPos);
+    //    }
+    //    //if (Input.GetMouseButtonDown(1))
+    //    //{
+    //    //    rootNodes.Remove(selectedNode);
+    //    //    selectedNode.DestroyNode();
+    //    //    selectedNode = rootNodes[rootNodes.Count - 1];
+    //    //}
+    //}
+
+    public void CheckAllResourceConnections()
     {
-        if (Input.GetMouseButtonDown(0))
+        List<Node> connectedNodes = new List<Node>();
+        foreach (Node node in isResourceNode)
         {
-            Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //SpawnRoot(selectedNode, cursorPos);
+            if (node.CheckIfConnectedToLeek())
+            {
+                connectedNodes.Add(node);
+            }
+            else
+            {
+                foreach (ResourcePoint resourcePoint in node.closeResources)
+                {
+                    ResourceManager.Instance.removeResource(resourcePoint.pumpOut());
+                }
+            }
         }
-        if (Input.GetMouseButtonDown(1))
+
+        foreach (Node node in connectedNodes)
         {
-            rootNodes.Remove(selectedNode);
-            selectedNode.DestroyNode();
-            selectedNode = rootNodes[rootNodes.Count - 1];
+            foreach (ResourcePoint resourcePoint in node.closeResources)
+            {
+                ResourceManager.Instance.addResources(resourcePoint.pumpOut());
+            }
         }
+
     }
 
     public void SpawnRoot()
