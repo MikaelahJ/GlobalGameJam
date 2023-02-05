@@ -39,7 +39,7 @@ public class RootHealth : MonoBehaviour
         rootDestroyed = false;
 
         GetComponentInParent<Root>().isBroken = false;
-        GetComponentInParent<Root>().brokenRoots.Remove(this);
+        //GetComponentInParent<Root>().brokenRoots.Remove(this);
 
         GetComponent<Collider2D>().enabled = true;
         GetComponent<SpriteRenderer>().enabled = true;

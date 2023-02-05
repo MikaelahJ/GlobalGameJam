@@ -83,6 +83,7 @@ public class Root : MonoBehaviour
         {
             rootHealth.RepairRoot();
         }
+        brokenRoots.Clear();
     }
 
 

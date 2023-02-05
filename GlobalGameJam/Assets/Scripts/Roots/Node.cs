@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public enum Abilities
 {
@@ -39,7 +40,11 @@ public class Node : MonoBehaviour
     private float timeBetweenAttacks;
     private GameObject enemyInRange;
 
-    private ResourceManager resManager;
+    [SerializeField] private TextMeshProUGUI resourceText;
+    [SerializeField] private TextMeshProUGUI upgradeText;
+    [SerializeField] private TextMeshProUGUI visionText;
+    [SerializeField] private TextMeshProUGUI defenseText;
+    [SerializeField] private TextMeshProUGUI repairText;
 
     public Node(Node parent)
     {
@@ -48,8 +53,6 @@ public class Node : MonoBehaviour
 
     void Start()
     {
-        resManager = ResourceManager.Instance;
-
         timeBetweenAttacks = 1;
         damage = 2;
         for (int i = 0; i < level; i++)
@@ -84,6 +87,10 @@ public class Node : MonoBehaviour
         {
             child.gameObject.SetActive(enabled);
         }
+
+        UpdateResourceCost();
+        UpdateRepairCost();
+
     }
 
     public void AddAbility(Abilities newAbility)
@@ -209,6 +216,11 @@ public class Node : MonoBehaviour
 
     private bool TryAddResources(Node current)
     {
+        if (current.abilities.Contains(Abilities.Resources))
+        {
+            return false;
+        }
+
         if (current.parent.abilities.Contains(Abilities.Resources))
         {
             validToAddResource.Add(current);
@@ -237,7 +249,7 @@ public class Node : MonoBehaviour
 
                 foreach (ResourcePoint resourcePoint in current.closeResources)
                 {
-                    TryConnectResourcePoint(resourcePoint);
+                    TryConnectResourcePoint(resourcePoint, current);
                 }
 
                 return;
@@ -252,7 +264,7 @@ public class Node : MonoBehaviour
         {
             Debug.Log("found resource");
             closeResources.Add(resourcePoint);
-            TryConnectResourcePoint(resourcePoint);
+            TryConnectResourcePoint(resourcePoint, this);
             
         }
 
@@ -269,9 +281,9 @@ public class Node : MonoBehaviour
         enemyInRange = null;
     }
 
-    void TryConnectResourcePoint(ResourcePoint resourcePoint)
+    void TryConnectResourcePoint(ResourcePoint resourcePoint, Node node)
     {
-        if (CheckIfConnectedToLeek(this))
+        if (CheckIfConnectedToLeek(node))
             ResourceManager.Instance.addResources(resourcePoint.pumpOut());
     }
 
@@ -300,19 +312,38 @@ public class Node : MonoBehaviour
         return ResourceManager.Instance.CanBuyUpgrade(cost);
     }
 
-    public int GetResourceCost()
+    public string GetResourceCost()
     {
         validToAddResource.Clear();
         if (TryAddResources(this))
         {
-            return validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE;
+            return (validToAddResource.Count * ResourceManager.UPGRADE_RESOURCE).ToString();
         }
 
-        return 999999;
+        return "X";
     }
 
-    public int GetRepairCost()
+    public void UpdateResourceCost()
     {
-        return RootToParent.GetComponent<Root>().GetRepairCost();
+        resourceText.text = GetResourceCost();
+    }
+
+
+    public void UpdateRepairCost()
+    {
+        if(parent == null) { return; }
+        repairText.text = "Repair: " + RootToParent.GetComponent<Root>().GetRepairCost().ToString();
+    }
+
+    public void RepairRoot()
+    {
+        int cost = RootToParent.GetComponent<Root>().GetRepairCost();
+        if (ResourceManager.Instance.CanBuyUpgrade(cost))
+        {
+            Debug.Log("Repaired roots");
+            RootToParent.GetComponent<Root>().RepairRoots();
+            return;
+        }
+        Debug.Log("Can't afford to repair roots");
     }
 }
