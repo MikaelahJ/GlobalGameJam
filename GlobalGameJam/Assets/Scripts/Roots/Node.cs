@@ -167,6 +167,10 @@ public class Node : MonoBehaviour
 
     public void UpgradeNode()
     {
+        if(level == 3){
+            return;
+        }
+
         if (parent.level <= level)
         {
             upgradeText.text = "Above root\ntoo weak!";
