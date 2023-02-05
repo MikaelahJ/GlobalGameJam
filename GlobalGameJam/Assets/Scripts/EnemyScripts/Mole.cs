@@ -41,6 +41,11 @@ public class Mole : Enemy
                 timer = 0;
             }
         }
+        else if (dead)
+        {
+            Debug.Log("Animating_dead");
+            animator.SetBool("dead", true);
+        }
     }
 
     private void Move()

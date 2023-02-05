@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
 
     public bool foundRoot;
     public bool attacking;
+    public bool dying;
+    public float deathTimer;
+    public bool dead;
 
     public Enemy(int _health, int _damage, float _speed, float _timeBetweenAttacks)
     {
@@ -51,11 +54,25 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            Debug.Log("dead");
-            EnemyManager.Instance.EnemyKilled(gameObject);
+            dying = true;
+            StartCoroutine(kill());
+            deathTimer = 2.0F;
+            Debug.Log("Dying");
         }
     }
 
+    public IEnumerator kill()
+    {
+        yield return new WaitForSeconds(2);
+        Debug.Log("dead");
+        dead = true;
+        removeCorpse();
+    }
+    public void removeCorpse()
+    {
+        Debug.Log("Enemykilled");
+        EnemyManager.Instance.EnemyKilled(gameObject);
+    }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Root") && !foundRoot)
